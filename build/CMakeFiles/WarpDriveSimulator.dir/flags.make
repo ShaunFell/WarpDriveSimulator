@@ -6,5 +6,5 @@ CXX_DEFINES =
 
 CXX_INCLUDES = -I/home/shaunfell/Documents/Github/warpdrive_simulator/src
 
-CXX_FLAGS = -std=gnu++17 -Wall -Wextra -Wpedantic
+CXX_FLAGS = -std=gnu++17 -Wno-unused-parameter -Wall -Wextra -Wpedantic
 

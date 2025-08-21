@@ -157,6 +157,13 @@ CMakeFiles/WarpDriveSimulator.dir/src/main.cpp.o: \
  /usr/include/c++/15/backward/auto_ptr.h \
  /usr/include/c++/15/pstl/glue_memory_defs.h \
  /usr/include/c++/15/pstl/execution_defs.h \
+ /usr/include/GLFW/glfw3native.h /usr/include/X11/Xlib.h \
+ /usr/include/X11/X.h /usr/include/X11/Xfuncproto.h \
+ /usr/include/X11/Xosdefs.h /usr/include/X11/extensions/Xrandr.h \
+ /usr/include/X11/extensions/randr.h \
+ /usr/include/X11/extensions/Xrender.h /usr/include/X11/Xutil.h \
+ /usr/include/X11/keysym.h /usr/include/X11/keysymdef.h \
+ /usr/include/X11/extensions/render.h /usr/include/X11/Xdefs.h \
  /home/shaunfell/Documents/Github/warpdrive_simulator/src/core/flat_spacetime.h \
  /home/shaunfell/Documents/Github/warpdrive_simulator/src/core/spacetime_metric.h \
  /home/shaunfell/Documents/Github/warpdrive_simulator/src/core/types.h \
