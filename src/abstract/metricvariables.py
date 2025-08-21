@@ -11,16 +11,16 @@ class Lapse:
         [jnp.ndarray, jnp.ndarray, jnp.ndarray, jnp.ndarray], jnp.ndarray
     ]  # α(t,x,y,z)
     dx: Callable[[jnp.ndarray, jnp.ndarray, jnp.ndarray, jnp.ndarray], jnp.ndarray] = (
-        None
+        lambda t, x, y, z: jnp.zeros_like(x)
     )
     dy: Callable[[jnp.ndarray, jnp.ndarray, jnp.ndarray, jnp.ndarray], jnp.ndarray] = (
-        None
+        lambda t, x, y, z: jnp.zeros_like(x)
     )
     dz: Callable[[jnp.ndarray, jnp.ndarray, jnp.ndarray, jnp.ndarray], jnp.ndarray] = (
-        None
+        lambda t, x, y, z: jnp.zeros_like(x)
     )
     dt: Callable[[jnp.ndarray, jnp.ndarray, jnp.ndarray, jnp.ndarray], jnp.ndarray] = (
-        None
+        lambda t, x, y, z: jnp.zeros_like(x)
     )
 
 
@@ -40,40 +40,40 @@ class Shift:
     # Derivatives of each component
     dx_dx: Callable[
         [jnp.ndarray, jnp.ndarray, jnp.ndarray, jnp.ndarray], jnp.ndarray
-    ] = None
+    ] = lambda t, x, y, z: jnp.zeros_like(x)
     dx_dy: Callable[
         [jnp.ndarray, jnp.ndarray, jnp.ndarray, jnp.ndarray], jnp.ndarray
-    ] = None
+    ] = lambda t, x, y, z: jnp.zeros_like(x)
     dx_dz: Callable[
         [jnp.ndarray, jnp.ndarray, jnp.ndarray, jnp.ndarray], jnp.ndarray
-    ] = None
+    ] = lambda t, x, y, z: jnp.zeros_like(x)
     dx_dt: Callable[
         [jnp.ndarray, jnp.ndarray, jnp.ndarray, jnp.ndarray], jnp.ndarray
-    ] = None
+    ] = lambda t, x, y, z: jnp.zeros_like(x)
     dy_dx: Callable[
         [jnp.ndarray, jnp.ndarray, jnp.ndarray, jnp.ndarray], jnp.ndarray
-    ] = None
+    ] = lambda t, x, y, z: jnp.zeros_like(x)
     dy_dy: Callable[
         [jnp.ndarray, jnp.ndarray, jnp.ndarray, jnp.ndarray], jnp.ndarray
-    ] = None
+    ] = lambda t, x, y, z: jnp.zeros_like(x)
     dy_dz: Callable[
         [jnp.ndarray, jnp.ndarray, jnp.ndarray, jnp.ndarray], jnp.ndarray
-    ] = None
+    ] = lambda t, x, y, z: jnp.zeros_like(x)
     dy_dt: Callable[
         [jnp.ndarray, jnp.ndarray, jnp.ndarray, jnp.ndarray], jnp.ndarray
-    ] = None
+    ] = lambda t, x, y, z: jnp.zeros_like(x)
     dz_dx: Callable[
         [jnp.ndarray, jnp.ndarray, jnp.ndarray, jnp.ndarray], jnp.ndarray
-    ] = None
+    ] = lambda t, x, y, z: jnp.zeros_like(x)
     dz_dy: Callable[
         [jnp.ndarray, jnp.ndarray, jnp.ndarray, jnp.ndarray], jnp.ndarray
-    ] = None
+    ] = lambda t, x, y, z: jnp.zeros_like(x)
     dz_dz: Callable[
         [jnp.ndarray, jnp.ndarray, jnp.ndarray, jnp.ndarray], jnp.ndarray
-    ] = None
+    ] = lambda t, x, y, z: jnp.zeros_like(x)
     dz_dt: Callable[
         [jnp.ndarray, jnp.ndarray, jnp.ndarray, jnp.ndarray], jnp.ndarray
-    ] = None
+    ] = lambda t, x, y, z: jnp.zeros_like(x)
 
 
 @dataclass
@@ -101,73 +101,73 @@ class SpatialMetric:
     # Derivatives of each component
     xx_dx: Callable[
         [jnp.ndarray, jnp.ndarray, jnp.ndarray, jnp.ndarray], jnp.ndarray
-    ] = None
+    ] = lambda t, x, y, z: jnp.zeros_like(x)
     xx_dy: Callable[
         [jnp.ndarray, jnp.ndarray, jnp.ndarray, jnp.ndarray], jnp.ndarray
-    ] = None
+    ] = lambda t, x, y, z: jnp.zeros_like(x)
     xx_dz: Callable[
         [jnp.ndarray, jnp.ndarray, jnp.ndarray, jnp.ndarray], jnp.ndarray
-    ] = None
+    ] = lambda t, x, y, z: jnp.zeros_like(x)
     xx_dt: Callable[
         [jnp.ndarray, jnp.ndarray, jnp.ndarray, jnp.ndarray], jnp.ndarray
-    ] = None
+    ] = lambda t, x, y, z: jnp.zeros_like(x)
     xy_dx: Callable[
         [jnp.ndarray, jnp.ndarray, jnp.ndarray, jnp.ndarray], jnp.ndarray
-    ] = None
+    ] = lambda t, x, y, z: jnp.zeros_like(x)
     xy_dy: Callable[
         [jnp.ndarray, jnp.ndarray, jnp.ndarray, jnp.ndarray], jnp.ndarray
-    ] = None
+    ] = lambda t, x, y, z: jnp.zeros_like(x)
     xy_dz: Callable[
         [jnp.ndarray, jnp.ndarray, jnp.ndarray, jnp.ndarray], jnp.ndarray
-    ] = None
+    ] = lambda t, x, y, z: jnp.zeros_like(x)
     xy_dt: Callable[
         [jnp.ndarray, jnp.ndarray, jnp.ndarray, jnp.ndarray], jnp.ndarray
-    ] = None
+    ] = lambda t, x, y, z: jnp.zeros_like(x)
     xz_dx: Callable[
         [jnp.ndarray, jnp.ndarray, jnp.ndarray, jnp.ndarray], jnp.ndarray
-    ] = None
+    ] = lambda t, x, y, z: jnp.zeros_like(x)
     xz_dy: Callable[
         [jnp.ndarray, jnp.ndarray, jnp.ndarray, jnp.ndarray], jnp.ndarray
-    ] = None
+    ] = lambda t, x, y, z: jnp.zeros_like(x)
     xz_dz: Callable[
         [jnp.ndarray, jnp.ndarray, jnp.ndarray, jnp.ndarray], jnp.ndarray
-    ] = None
+    ] = lambda t, x, y, z: jnp.zeros_like(x)
     xz_dt: Callable[
         [jnp.ndarray, jnp.ndarray, jnp.ndarray, jnp.ndarray], jnp.ndarray
-    ] = None
+    ] = lambda t, x, y, z: jnp.zeros_like(x)
     yy_dx: Callable[
         [jnp.ndarray, jnp.ndarray, jnp.ndarray, jnp.ndarray], jnp.ndarray
-    ] = None
+    ] = lambda t, x, y, z: jnp.zeros_like(x)
     yy_dy: Callable[
         [jnp.ndarray, jnp.ndarray, jnp.ndarray, jnp.ndarray], jnp.ndarray
-    ] = None
+    ] = lambda t, x, y, z: jnp.zeros_like(x)
     yy_dz: Callable[
         [jnp.ndarray, jnp.ndarray, jnp.ndarray, jnp.ndarray], jnp.ndarray
-    ] = None
+    ] = lambda t, x, y, z: jnp.zeros_like(x)
     yy_dt: Callable[
         [jnp.ndarray, jnp.ndarray, jnp.ndarray, jnp.ndarray], jnp.ndarray
-    ] = None
+    ] = lambda t, x, y, z: jnp.zeros_like(x)
     yz_dx: Callable[
         [jnp.ndarray, jnp.ndarray, jnp.ndarray, jnp.ndarray], jnp.ndarray
-    ] = None
+    ] = lambda t, x, y, z: jnp.zeros_like(x)
     yz_dy: Callable[
         [jnp.ndarray, jnp.ndarray, jnp.ndarray, jnp.ndarray], jnp.ndarray
-    ] = None
+    ] = lambda t, x, y, z: jnp.zeros_like(x)
     yz_dz: Callable[
         [jnp.ndarray, jnp.ndarray, jnp.ndarray, jnp.ndarray], jnp.ndarray
-    ] = None
+    ] = lambda t, x, y, z: jnp.zeros_like(x)
     yz_dt: Callable[
         [jnp.ndarray, jnp.ndarray, jnp.ndarray, jnp.ndarray], jnp.ndarray
-    ] = None
+    ] = lambda t, x, y, z: jnp.zeros_like(x)
     zz_dx: Callable[
         [jnp.ndarray, jnp.ndarray, jnp.ndarray, jnp.ndarray], jnp.ndarray
-    ] = None
+    ] = lambda t, x, y, z: jnp.zeros_like(x)
     zz_dy: Callable[
         [jnp.ndarray, jnp.ndarray, jnp.ndarray, jnp.ndarray], jnp.ndarray
-    ] = None
+    ] = lambda t, x, y, z: jnp.zeros_like(x)
     zz_dz: Callable[
         [jnp.ndarray, jnp.ndarray, jnp.ndarray, jnp.ndarray], jnp.ndarray
-    ] = None
+    ] = lambda t, x, y, z: jnp.zeros_like(x)
     zz_dt: Callable[
         [jnp.ndarray, jnp.ndarray, jnp.ndarray, jnp.ndarray], jnp.ndarray
-    ] = None
+    ] = lambda t, x, y, z: jnp.zeros_like(x)

@@ -14,15 +14,14 @@ class Spacetime(ABC):
     """Abstract base class for spacetime definitions"""
 
     def __init__(self, metric: Metric):
-        self.metric = Metric
-        self.christoffel = Christoffel(Metric)
+        self.metric = metric
+        self.christoffel = Christoffel(metric)
 
-    @abstractmethod
     def metric(
         self, x: jnp.ndarray, y: jnp.ndarray, z: jnp.ndarray, t: jnp.ndarray
     ) -> Metric:
         """Return the metric at given spacetime coordinates"""
-        pass
+        return self.metric.metric4(t, x, y, z)
 
     def christoffel(
         self,
