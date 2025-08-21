@@ -1,7 +1,6 @@
 from abc import ABC, abstractmethod
 from typing import Tuple
 from dataclasses import dataclass
-from functools import cached_property, lru_cache
 
 from .metricvariables import Lapse, Shift, SpatialMetric
 
@@ -50,17 +49,20 @@ class Metric(ABC):
                 self.metric3.zz(t, x, y, z),
             ],
         ])
+        gamma = jnp.moveaxis(gamma, -1, 0)  # Shape (N, 3,3)
 
         # Shift vector
-        beta = jnp.array([beta_x, beta_y, beta_z])
+        beta = jnp.moveaxis(jnp.array([beta_x, beta_y, beta_z]), -1, 0)  # Shape (N,3)
 
         # Compute β_i β^i = β_i γ^ij β_j
         gamma_inv = jnp.linalg.inv(gamma)
-        beta_squared = jnp.einsum("i...,ij...,j...", beta, gamma_inv, beta)
+        beta_squared = jnp.einsum(
+            "...i,...ij,...j", beta, gamma_inv, beta
+        )  # Shape (N,)
 
         # Build full 4D metric
-        g00 = -(alpha**2) + beta_squared
-        g0i = beta
+        g00 = -(alpha**2) + beta_squared  # Shape (N,)
+        g0i = beta  # Shape (N,3)
 
         metric4 = jnp.zeros((*g00.shape, 4, 4))
         metric4 = metric4.at[..., 0, 0].set(g00)
@@ -70,28 +72,24 @@ class Metric(ABC):
 
         return metric4
 
-    @lru_cache
     def dmetric4_dx(
         self, t: jnp.ndarray, x: jnp.ndarray, y: jnp.ndarray, z: jnp.ndarray
     ) -> jnp.ndarray:
         """Derivative of 4D metric with respect to x"""
         return self._compute_4d_metric_derivative("dx", t, x, y, z)
 
-    @lru_cache
     def dmetric4_dy(
         self, t: jnp.ndarray, x: jnp.ndarray, y: jnp.ndarray, z: jnp.ndarray
     ) -> jnp.ndarray:
         """Derivative of 4D metric with respect to y"""
         return self._compute_4d_metric_derivative("dy", t, x, y, z)
 
-    @lru_cache
     def dmetric4_dz(
         self, t: jnp.ndarray, x: jnp.ndarray, y: jnp.ndarray, z: jnp.ndarray
     ) -> jnp.ndarray:
         """Derivative of 4D metric with respect to z"""
         return self._compute_4d_metric_derivative("dz", t, x, y, z)
 
-    @lru_cache
     def dmetric4_dt(
         self, t: jnp.ndarray, x: jnp.ndarray, y: jnp.ndarray, z: jnp.ndarray
     ) -> jnp.ndarray:
@@ -180,13 +178,13 @@ class Metric(ABC):
         )
 
         # Derivative of g_00
-        dg00 = -2 * alpha * lapse_deriv + dbeta_squared
+        dg00 = jnp.moveaxis(-2 * alpha * lapse_deriv + dbeta_squared, -1, 0)
 
         # Derivative of g_0i (just the shift derivatives)
-        dg0i = shift_derivs
+        dg0i = jnp.moveaxis(shift_derivs, -1, 0)
 
         # Derivative of g_ij (spatial metric derivatives)
-        dgij = gamma_derivs
+        dgij = jnp.moveaxis(gamma_derivs, -1, 0)
 
         # Build derivative of full 4D metric
         shape = (*alpha.shape, 4, 4)
@@ -208,7 +206,6 @@ class Christoffel:
     def __init__(self, metric: Metric):
         self.metric = metric
 
-    @lru_cache
     def compute_symbol(
         self,
         indices: tuple,
@@ -231,7 +228,7 @@ class Christoffel:
             raise ValueError(f"index must be either 0,1,2,3. Got {indices}")
 
         # Get the metric and its inverse at the point
-        g = self.metric.metric4(t, x, y, z)
+        g = self.metric(t, x, y, z)
         g_inv = jnp.linalg.inv(g)
 
         # Get metric derivatives
