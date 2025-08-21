@@ -4,6 +4,7 @@ from dataclasses import dataclass
 from functools import cached_property
 
 from .metricvariables import Lapse, Shift, SpatialMetric
+from .metric import Metric, Christoffel
 
 import jax
 import jax.numpy as jnp
@@ -12,6 +13,10 @@ import jax.numpy as jnp
 class Spacetime(ABC):
     """Abstract base class for spacetime definitions"""
 
+    def __init__(self, metric: Metric):
+        self.metric = Metric
+        self.christoffel = Christoffel(Metric)
+
     @abstractmethod
     def metric(
         self, x: jnp.ndarray, y: jnp.ndarray, z: jnp.ndarray, t: jnp.ndarray
@@ -19,23 +24,27 @@ class Spacetime(ABC):
         """Return the metric at given spacetime coordinates"""
         pass
 
-    @abstractmethod
     def christoffel(
-        self, x: jnp.ndarray, y: jnp.ndarray, z: jnp.ndarray, t: jnp.ndarray
+        self,
+        indices: tuple,
+        t: jnp.ndarray,
+        x: jnp.ndarray,
+        y: jnp.ndarray,
+        z: jnp.ndarray,
     ) -> jnp.ndarray:
-        """Return Christoffel symbols Γ^μ_νρ at given spacetime coordinates"""
-        pass
+        """Return Christoffel symbol Γ^μ_νρ at given spacetime coordinates"""
+        return self.christoffel.compute_symbol(indices, t, x, y, z)
 
-    @abstractmethod
     def dmetric(
-        self, x: jnp.ndarray, y: jnp.ndarray, z: jnp.ndarray, t: jnp.ndarray
+        self,
+        coord: str,
+        t: jnp.ndarray,
+        x: jnp.ndarray,
+        y: jnp.ndarray,
+        z: jnp.ndarray,
     ) -> Tuple[jnp.ndarray, jnp.ndarray, jnp.ndarray, jnp.ndarray]:
-        """Return derivatives of metric (∂g_μν/∂x^α) at given spacetime coordinates
-
-        Returns:
-            Tuple of (dg/dx, dg/dy, dg/dz, dg/dt)
-        """
-        pass
+        """Compute derivative of 4D metric with respect to given coordinate"""
+        return self.metric._compute_4d_metric_derivative(coord, t, x, y, z)
 
     def __enter__(self):
         """Context manager entry - allows 'with spacetime:' syntax"""
