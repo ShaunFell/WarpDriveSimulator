@@ -6,11 +6,15 @@ CMakeFiles/WarpDriveSimulator.dir/src/core/flat_spacetime.cpp.o: /home/shaunfell
   /home/shaunfell/Documents/Github/warpdrive_simulator/src/core/spacetime_metric.h \
   /home/shaunfell/Documents/Github/warpdrive_simulator/src/core/types.h \
   /usr/include/alloca.h \
+  /usr/include/asm-generic/errno-base.h \
+  /usr/include/asm-generic/errno.h \
+  /usr/include/asm/errno.h \
   /usr/include/assert.h \
   /usr/include/bits/atomic_wide_counter.h \
   /usr/include/bits/byteswap.h \
   /usr/include/bits/endian.h \
   /usr/include/bits/endianness.h \
+  /usr/include/bits/errno.h \
   /usr/include/bits/floatn-common.h \
   /usr/include/bits/floatn.h \
   /usr/include/bits/flt-eval-method.h \
@@ -20,6 +24,7 @@ CMakeFiles/WarpDriveSimulator.dir/src/core/flat_spacetime.cpp.o: /home/shaunfell
   /usr/include/bits/libc-header-start.h \
   /usr/include/bits/libm-simd-decl-stubs.h \
   /usr/include/bits/local_lim.h \
+  /usr/include/bits/locale.h \
   /usr/include/bits/long-double.h \
   /usr/include/bits/math-vector.h \
   /usr/include/bits/mathcalls-helper-functions.h \
@@ -35,6 +40,7 @@ CMakeFiles/WarpDriveSimulator.dir/src/core/flat_spacetime.cpp.o: /home/shaunfell
   /usr/include/bits/stdint-intn.h \
   /usr/include/bits/stdint-least.h \
   /usr/include/bits/stdint-uintn.h \
+  /usr/include/bits/stdio_lim.h \
   /usr/include/bits/stdlib-float.h \
   /usr/include/bits/struct_mutex.h \
   /usr/include/bits/struct_rwlock.h \
@@ -42,16 +48,26 @@ CMakeFiles/WarpDriveSimulator.dir/src/core/flat_spacetime.cpp.o: /home/shaunfell
   /usr/include/bits/time64.h \
   /usr/include/bits/timesize.h \
   /usr/include/bits/types.h \
+  /usr/include/bits/types/FILE.h \
+  /usr/include/bits/types/__FILE.h \
+  /usr/include/bits/types/__fpos64_t.h \
+  /usr/include/bits/types/__fpos_t.h \
   /usr/include/bits/types/__locale_t.h \
+  /usr/include/bits/types/__mbstate_t.h \
   /usr/include/bits/types/__sigset_t.h \
   /usr/include/bits/types/clock_t.h \
   /usr/include/bits/types/clockid_t.h \
+  /usr/include/bits/types/cookie_io_functions_t.h \
+  /usr/include/bits/types/error_t.h \
   /usr/include/bits/types/locale_t.h \
+  /usr/include/bits/types/mbstate_t.h \
   /usr/include/bits/types/sigset_t.h \
+  /usr/include/bits/types/struct_FILE.h \
   /usr/include/bits/types/struct_timespec.h \
   /usr/include/bits/types/struct_timeval.h \
   /usr/include/bits/types/time_t.h \
   /usr/include/bits/types/timer_t.h \
+  /usr/include/bits/types/wint_t.h \
   /usr/include/bits/typesizes.h \
   /usr/include/bits/uintn-identity.h \
   /usr/include/bits/uio_lim.h \
@@ -60,37 +76,76 @@ CMakeFiles/WarpDriveSimulator.dir/src/core/flat_spacetime.cpp.o: /home/shaunfell
   /usr/include/bits/wchar.h \
   /usr/include/bits/wordsize.h \
   /usr/include/bits/xopen_lim.h \
+  /usr/include/c++/15/backward/binders.h \
   /usr/include/c++/15/bit \
+  /usr/include/c++/15/bits/alloc_traits.h \
+  /usr/include/c++/15/bits/allocator.h \
+  /usr/include/c++/15/bits/basic_string.h \
+  /usr/include/c++/15/bits/basic_string.tcc \
+  /usr/include/c++/15/bits/char_traits.h \
+  /usr/include/c++/15/bits/charconv.h \
   /usr/include/c++/15/bits/concept_check.h \
   /usr/include/c++/15/bits/cpp_type_traits.h \
+  /usr/include/c++/15/bits/cxxabi_forced.h \
+  /usr/include/c++/15/bits/exception.h \
   /usr/include/c++/15/bits/exception_defines.h \
   /usr/include/c++/15/bits/functexcept.h \
+  /usr/include/c++/15/bits/functional_hash.h \
+  /usr/include/c++/15/bits/hash_bytes.h \
+  /usr/include/c++/15/bits/invoke.h \
+  /usr/include/c++/15/bits/localefwd.h \
+  /usr/include/c++/15/bits/memory_resource.h \
+  /usr/include/c++/15/bits/memoryfwd.h \
   /usr/include/c++/15/bits/move.h \
+  /usr/include/c++/15/bits/new_allocator.h \
+  /usr/include/c++/15/bits/ostream_insert.h \
+  /usr/include/c++/15/bits/postypes.h \
   /usr/include/c++/15/bits/predefined_ops.h \
   /usr/include/c++/15/bits/ptr_traits.h \
+  /usr/include/c++/15/bits/range_access.h \
+  /usr/include/c++/15/bits/refwrap.h \
   /usr/include/c++/15/bits/requires_hosted.h \
   /usr/include/c++/15/bits/specfun.h \
   /usr/include/c++/15/bits/std_abs.h \
   /usr/include/c++/15/bits/stl_algobase.h \
+  /usr/include/c++/15/bits/stl_construct.h \
+  /usr/include/c++/15/bits/stl_function.h \
   /usr/include/c++/15/bits/stl_iterator.h \
   /usr/include/c++/15/bits/stl_iterator_base_funcs.h \
   /usr/include/c++/15/bits/stl_iterator_base_types.h \
   /usr/include/c++/15/bits/stl_pair.h \
+  /usr/include/c++/15/bits/string_view.tcc \
+  /usr/include/c++/15/bits/stringfwd.h \
+  /usr/include/c++/15/bits/uses_allocator.h \
+  /usr/include/c++/15/bits/uses_allocator_args.h \
   /usr/include/c++/15/bits/utility.h \
   /usr/include/c++/15/bits/version.h \
   /usr/include/c++/15/cassert \
+  /usr/include/c++/15/cctype \
+  /usr/include/c++/15/cerrno \
   /usr/include/c++/15/cfloat \
   /usr/include/c++/15/climits \
+  /usr/include/c++/15/clocale \
   /usr/include/c++/15/cmath \
   /usr/include/c++/15/concepts \
   /usr/include/c++/15/cstddef \
   /usr/include/c++/15/cstdint \
+  /usr/include/c++/15/cstdio \
+  /usr/include/c++/15/cstdlib \
+  /usr/include/c++/15/cwchar \
   /usr/include/c++/15/debug/assertions.h \
   /usr/include/c++/15/debug/debug.h \
+  /usr/include/c++/15/ext/alloc_traits.h \
   /usr/include/c++/15/ext/numeric_traits.h \
+  /usr/include/c++/15/ext/string_conversions.h \
   /usr/include/c++/15/ext/type_traits.h \
+  /usr/include/c++/15/initializer_list \
+  /usr/include/c++/15/iosfwd \
   /usr/include/c++/15/limits \
+  /usr/include/c++/15/new \
   /usr/include/c++/15/pstl/pstl_config.h \
+  /usr/include/c++/15/string \
+  /usr/include/c++/15/string_view \
   /usr/include/c++/15/tr1/bessel_function.tcc \
   /usr/include/c++/15/tr1/beta_function.tcc \
   /usr/include/c++/15/tr1/ell_integral.tcc \
@@ -103,11 +158,16 @@ CMakeFiles/WarpDriveSimulator.dir/src/core/flat_spacetime.cpp.o: /home/shaunfell
   /usr/include/c++/15/tr1/poly_laguerre.tcc \
   /usr/include/c++/15/tr1/riemann_zeta.tcc \
   /usr/include/c++/15/tr1/special_function_util.h \
+  /usr/include/c++/15/tuple \
   /usr/include/c++/15/type_traits \
+  /usr/include/c++/15/x86_64-redhat-linux/bits/c++allocator.h \
   /usr/include/c++/15/x86_64-redhat-linux/bits/c++config.h \
+  /usr/include/c++/15/x86_64-redhat-linux/bits/c++locale.h \
   /usr/include/c++/15/x86_64-redhat-linux/bits/cpu_defines.h \
   /usr/include/c++/15/x86_64-redhat-linux/bits/os_defines.h \
+  /usr/include/ctype.h \
   /usr/include/endian.h \
+  /usr/include/errno.h \
   /usr/include/features-time64.h \
   /usr/include/features.h \
   /usr/include/glm/common.hpp \
@@ -258,16 +318,21 @@ CMakeFiles/WarpDriveSimulator.dir/src/core/flat_spacetime.cpp.o: /home/shaunfell
   /usr/include/gnu/stubs-64.h \
   /usr/include/gnu/stubs.h \
   /usr/include/limits.h \
+  /usr/include/linux/errno.h \
   /usr/include/linux/limits.h \
+  /usr/include/locale.h \
   /usr/include/math.h \
   /usr/include/stdc-predef.h \
   /usr/include/stdint.h \
+  /usr/include/stdio.h \
   /usr/include/stdlib.h \
   /usr/include/sys/cdefs.h \
   /usr/include/sys/select.h \
   /usr/include/sys/types.h \
+  /usr/include/wchar.h \
   /usr/lib/gcc/x86_64-redhat-linux/15/include/float.h \
   /usr/lib/gcc/x86_64-redhat-linux/15/include/limits.h \
+  /usr/lib/gcc/x86_64-redhat-linux/15/include/stdarg.h \
   /usr/lib/gcc/x86_64-redhat-linux/15/include/stddef.h \
   /usr/lib/gcc/x86_64-redhat-linux/15/include/stdint.h \
   /usr/lib/gcc/x86_64-redhat-linux/15/include/syslimits.h
@@ -993,6 +1058,68 @@ CMakeFiles/WarpDriveSimulator.dir/src/rendering/shader.cpp.o: /home/shaunfell/Do
 CMakeFiles/WarpDriveSimulator.dir/src/simulation/spacetime_manager.cpp.o: /home/shaunfell/Documents/Github/warpdrive_simulator/src/simulation/spacetime_manager.cpp \
   /usr/include/stdc-predef.h
 
+WarpDriveSimulator: /lib64/ld-linux-x86-64.so.2 \
+  /lib64/libc.so.6 \
+  /lib64/libgcc_s.so.1 \
+  /lib64/libm.so.6 \
+  /lib64/libmvec.so.1 \
+  /usr/lib64/crt1.o \
+  /usr/lib64/crti.o \
+  /usr/lib64/crtn.o \
+  /usr/lib64/libc.so \
+  /usr/lib64/libglfw.so \
+  /usr/lib64/libm.so \
+  /usr/lib/gcc/x86_64-redhat-linux/15/crtbegin.o \
+  /usr/lib/gcc/x86_64-redhat-linux/15/crtend.o \
+  /usr/lib/gcc/x86_64-redhat-linux/15/libgcc.a \
+  /usr/lib/gcc/x86_64-redhat-linux/15/libgcc_s.so \
+  /usr/lib/gcc/x86_64-redhat-linux/15/libstdc++.so \
+  /usr/lib64/libGL.so.1 \
+  /usr/lib64/libGLEW.so \
+  /usr/lib64/libGLX.so \
+  /usr/lib64/libGLdispatch.so.0 \
+  /usr/lib64/libOpenGL.so \
+  /usr/lib64/libX11.so.6 \
+  /usr/lib64/libXau.so.6 \
+  /usr/lib64/libXext.so.6 \
+  /usr/lib64/libc_nonshared.a \
+  /usr/lib64/libxcb.so.1 \
+  CMakeFiles/WarpDriveSimulator.dir/src/core/flat_spacetime.cpp.o \
+  CMakeFiles/WarpDriveSimulator.dir/src/core/spacetime_metric.cpp.o \
+  CMakeFiles/WarpDriveSimulator.dir/src/main.cpp.o \
+  CMakeFiles/WarpDriveSimulator.dir/src/rendering/camera.cpp.o \
+  CMakeFiles/WarpDriveSimulator.dir/src/rendering/renderer.cpp.o \
+  CMakeFiles/WarpDriveSimulator.dir/src/rendering/shader.cpp.o \
+  CMakeFiles/WarpDriveSimulator.dir/src/simulation/spacetime_manager.cpp.o
+
+
+CMakeFiles/WarpDriveSimulator.dir/src/rendering/shader.cpp.o:
+
+CMakeFiles/WarpDriveSimulator.dir/src/rendering/camera.cpp.o:
+
+CMakeFiles/WarpDriveSimulator.dir/src/core/flat_spacetime.cpp.o:
+
+/usr/lib64/libxcb.so.1:
+
+/usr/lib64/libXext.so.6:
+
+/usr/lib64/libGLX.so:
+
+/usr/lib/gcc/x86_64-redhat-linux/15/libstdc++.so:
+
+/usr/lib/gcc/x86_64-redhat-linux/15/libgcc.a:
+
+/usr/lib64/libm.so:
+
+/usr/lib64/crt1.o:
+
+/lib64/libmvec.so.1:
+
+/lib64/libc.so.6:
+
+/usr/lib64/libXau.so.6:
+
+/lib64/ld-linux-x86-64.so.2:
 
 /home/shaunfell/Documents/Github/warpdrive_simulator/src/rendering/shader.cpp:
 
@@ -1006,13 +1133,9 @@ CMakeFiles/WarpDriveSimulator.dir/src/simulation/spacetime_manager.cpp.o: /home/
 
 /home/shaunfell/Documents/Github/warpdrive_simulator/src/rendering/camera.cpp:
 
-/usr/lib/gcc/x86_64-redhat-linux/15/include/stdarg.h:
-
 /usr/include/time.h:
 
 /usr/include/pthread.h:
-
-/usr/include/ctype.h:
 
 /usr/include/c++/15/x86_64-redhat-linux/bits/gthr.h:
 
@@ -1020,23 +1143,11 @@ CMakeFiles/WarpDriveSimulator.dir/src/simulation/spacetime_manager.cpp.o: /home/
 
 /usr/include/c++/15/x86_64-redhat-linux/bits/ctype_inline.h:
 
-/usr/include/c++/15/x86_64-redhat-linux/bits/c++allocator.h:
-
-/usr/include/c++/15/tuple:
-
 /usr/include/c++/15/streambuf:
 
 /usr/include/c++/15/pstl/glue_memory_defs.h:
 
 /usr/include/c++/15/pstl/execution_defs.h:
-
-/usr/include/linux/errno.h:
-
-/usr/include/c++/15/new:
-
-/usr/include/c++/15/iosfwd:
-
-/usr/include/c++/15/ext/string_conversions.h:
 
 /usr/include/c++/15/ext/atomicity.h:
 
@@ -1044,41 +1155,23 @@ CMakeFiles/WarpDriveSimulator.dir/src/simulation/spacetime_manager.cpp.o: /home/
 
 /usr/include/c++/15/exception:
 
-/usr/include/c++/15/cwchar:
-
-/usr/include/c++/15/cstdlib:
-
-/usr/include/c++/15/cstdio:
-
-/usr/include/c++/15/clocale:
-
-/usr/include/c++/15/cerrno:
-
 /usr/include/c++/15/iostream:
 
 /usr/include/c++/15/bits/vector.tcc:
 
-/usr/include/c++/15/bits/uses_allocator_args.h:
-
 /usr/include/c++/15/bits/unique_ptr.h:
-
-/usr/include/c++/15/bits/stringfwd.h:
 
 /usr/include/c++/15/bits/streambuf_iterator.h:
 
 /usr/include/c++/15/bits/stl_raw_storage_iter.h:
 
-/usr/include/c++/15/bits/stl_function.h:
-
 /usr/include/c++/15/bits/stl_uninitialized.h:
 
 /usr/include/c++/15/bits/shared_ptr_base.h:
 
+CMakeFiles/WarpDriveSimulator.dir/src/simulation/spacetime_manager.cpp.o:
+
 /usr/include/c++/15/bits/shared_ptr.h:
-
-/usr/include/c++/15/bits/refwrap.h:
-
-/usr/include/c++/15/bits/range_access.h:
 
 /usr/include/c++/15/bits/ostream.tcc:
 
@@ -1086,25 +1179,13 @@ CMakeFiles/WarpDriveSimulator.dir/src/simulation/spacetime_manager.cpp.o: /home/
 
 /usr/include/c++/15/bits/nested_exception.h:
 
-/usr/include/c++/15/bits/memoryfwd.h:
-
-/usr/include/c++/15/bits/memory_resource.h:
-
 /usr/include/c++/15/bits/locale_facets.tcc:
+
+/usr/lib64/crtn.o:
 
 /usr/include/c++/15/bits/ios_base.h:
 
-/usr/include/c++/15/bits/functional_hash.h:
-
 /usr/include/c++/15/bits/cxxabi_init_exception.h:
-
-/usr/include/c++/15/bits/cxxabi_forced.h:
-
-/usr/include/c++/15/bits/streambuf.tcc:
-
-/usr/include/c++/15/bits/basic_string.tcc:
-
-/usr/include/c++/15/bits/basic_string.h:
 
 /usr/include/c++/15/bits/basic_ios.h:
 
@@ -1116,47 +1197,17 @@ CMakeFiles/WarpDriveSimulator.dir/src/simulation/spacetime_manager.cpp.o: /home/
 
 /usr/include/c++/15/bits/allocated_ptr.h:
 
-/usr/include/c++/15/bits/alloc_traits.h:
-
 /usr/include/c++/15/bits/align.h:
 
 /usr/include/bits/types/struct_sched_param.h:
 
 /usr/include/bits/types/struct_itimerspec.h:
 
-/usr/include/c++/15/cctype:
-
-/usr/include/bits/types/struct_FILE.h:
-
-/usr/include/bits/types/mbstate_t.h:
-
-/usr/include/c++/15/bits/ostream_insert.h:
-
-/usr/include/bits/types/error_t.h:
-
-/usr/include/bits/types/cookie_io_functions_t.h:
-
-/usr/include/bits/types/__mbstate_t.h:
-
-/usr/include/bits/types/__fpos_t.h:
-
-/usr/include/bits/types/__fpos64_t.h:
-
-/usr/include/linux/posix_types.h:
-
-/usr/include/bits/types/FILE.h:
+/usr/lib64/libGLEW.so:
 
 /usr/include/bits/timex.h:
 
 /usr/include/bits/setjmp.h:
-
-/usr/include/bits/locale.h:
-
-/usr/include/bits/errno.h:
-
-/usr/include/c++/15/bits/new_allocator.h:
-
-/usr/include/bits/cpu-set.h:
 
 /usr/include/asm/types.h:
 
@@ -1169,10 +1220,6 @@ CMakeFiles/WarpDriveSimulator.dir/src/simulation/spacetime_manager.cpp.o: /home/
 /usr/include/asm/bitsperlong.h:
 
 /usr/include/asm-generic/int-ll64.h:
-
-/usr/include/asm-generic/errno.h:
-
-/usr/include/asm-generic/errno-base.h:
 
 /usr/include/GLFW/glfw3.h:
 
@@ -1196,11 +1243,7 @@ CMakeFiles/WarpDriveSimulator.dir/src/simulation/spacetime_manager.cpp.o: /home/
 
 /usr/lib/gcc/x86_64-redhat-linux/15/include/stdint.h:
 
-/usr/include/c++/15/algorithm:
-
-/usr/include/c++/15/bits/hash_bytes.h:
-
-/usr/lib/gcc/x86_64-redhat-linux/15/include/limits.h:
+/usr/lib/gcc/x86_64-redhat-linux/15/include/stdarg.h:
 
 /usr/lib/gcc/x86_64-redhat-linux/15/include/float.h:
 
@@ -1210,75 +1253,173 @@ CMakeFiles/WarpDriveSimulator.dir/src/simulation/spacetime_manager.cpp.o: /home/
 
 /usr/include/linux/limits.h:
 
-/usr/include/c++/15/bits/stl_tempbuf.h:
+/usr/include/limits.h:
 
-/usr/include/glm/detail/type_half.inl:
+/usr/include/gnu/stubs.h:
 
-/usr/include/glm/detail/func_vector_relational.inl:
+/usr/include/gnu/stubs-64.h:
 
-/usr/include/glm/ext/matrix_float4x4_precision.hpp:
+/usr/include/glm/vector_relational.hpp:
 
 /usr/include/c++/15/bits/basic_ios.tcc:
 
 /usr/include/glm/vec2.hpp:
 
-/usr/include/stdlib.h:
+/usr/include/glm/packing.hpp:
 
-/usr/include/glm/detail/func_integer.inl:
+/usr/include/glm/mat4x3.hpp:
 
-/usr/include/c++/15/initializer_list:
+/usr/include/glm/mat4x2.hpp:
 
-/usr/include/glm/detail/func_common.inl:
+/usr/include/glm/mat3x4.hpp:
 
-/usr/include/bits/mathcalls-narrow.h:
+/usr/include/glm/mat3x3.hpp:
 
-/usr/include/glm/ext/matrix_float2x4_precision.hpp:
+/usr/include/glm/mat2x3.hpp:
+
+/usr/include/glm/mat2x2.hpp:
+
+/usr/include/glm/integer.hpp:
+
+/home/shaunfell/Documents/Github/warpdrive_simulator/src/rendering/shader.h:
+
+/usr/include/glm/simd/platform.h:
+
+/usr/include/glm/gtc/matrix_transform.hpp:
+
+/usr/include/glm/gtc/constants.inl:
+
+/usr/include/glm/gtc/constants.hpp:
+
+/usr/include/glm/glm.hpp:
+
+/usr/include/glm/geometric.hpp:
+
+/usr/include/glm/fwd.hpp:
+
+/usr/include/c++/15/vector:
+
+/usr/include/glm/ext/vector_uint3_sized.hpp:
+
+/usr/include/glm/ext/vector_uint2_sized.hpp:
+
+/usr/include/glm/ext/vector_int4_sized.hpp:
 
 /usr/include/c++/15/stdexcept:
 
 /usr/include/glm/ext/vector_int4.hpp:
 
-/usr/include/c++/15/x86_64-redhat-linux/bits/cpu_defines.h:
+/usr/include/glm/ext/vector_int3.hpp:
 
-/usr/include/glm/detail/type_mat3x4.hpp:
+/usr/include/glm/ext/vector_int2_sized.hpp:
 
-/usr/include/c++/15/x86_64-redhat-linux/bits/c++config.h:
+/usr/include/glm/ext/vector_int2.hpp:
 
-/usr/include/c++/15/type_traits:
+/usr/include/glm/ext/vector_float4_precision.hpp:
 
-/usr/include/bits/floatn.h:
-
-/usr/include/features-time64.h:
-
-/usr/include/c++/15/tr1/modified_bessel_func.tcc:
-
-/usr/include/c++/15/tr1/legendre_function.tcc:
-
-/usr/include/c++/15/ostream:
-
-/usr/include/c++/15/bits/exception.h:
-
-/usr/include/glm/detail/compute_common.hpp:
-
-/usr/include/c++/15/tr1/exp_integral.tcc:
-
-/usr/include/glm/ext/vector_double3.hpp:
-
-/usr/include/c++/15/tr1/bessel_function.tcc:
-
-/usr/include/glm/detail/func_geometric.inl:
-
-/usr/include/c++/15/limits:
-
-/usr/include/c++/15/ext/type_traits.h:
+/usr/include/glm/ext/vector_float4.hpp:
 
 /usr/include/glm/ext/vector_float3_precision.hpp:
 
-/usr/include/c++/15/cstdint:
+/usr/include/glm/ext/vector_float3.hpp:
 
-/usr/include/bits/mathcalls-macros.h:
+/usr/include/glm/ext/vector_float2_precision.hpp:
 
-/usr/include/c++/15/tr1/hypergeometric.tcc:
+/usr/include/glm/ext/vector_float2.hpp:
+
+/usr/include/glm/ext/vector_double4_precision.hpp:
+
+/lib64/libgcc_s.so.1:
+
+/usr/include/glm/ext/vector_double3_precision.hpp:
+
+/usr/include/glm/ext/vector_double3.hpp:
+
+/usr/include/glm/ext/vector_double2.hpp:
+
+/usr/include/asm-generic/types.h:
+
+/usr/include/asm-generic/bitsperlong.h:
+
+/usr/include/glm/ext/vector_bool4.hpp:
+
+/usr/include/glm/ext/vector_bool3_precision.hpp:
+
+/home/shaunfell/Documents/Github/warpdrive_simulator/src/core/spacetime_metric.cpp:
+
+/usr/include/glm/ext/vector_bool2_precision.hpp:
+
+/usr/include/glm/ext/vector_bool2.hpp:
+
+/usr/include/glm/ext/scalar_uint_sized.hpp:
+
+/usr/include/c++/15/climits:
+
+/usr/include/c++/15/cerrno:
+
+/usr/include/wchar.h:
+
+/usr/include/glm/mat3x2.hpp:
+
+/usr/include/bits/posix1_lim.h:
+
+/usr/include/c++/15/bits/locale_classes.tcc:
+
+/usr/include/glm/detail/type_vec1.inl:
+
+/usr/include/glm/ext/matrix_clip_space.hpp:
+
+/usr/include/c++/15/bits/std_abs.h:
+
+/usr/include/c++/15/bits/range_access.h:
+
+/usr/lib/gcc/x86_64-redhat-linux/15/crtbegin.o:
+
+/usr/include/c++/15/cfloat:
+
+/usr/include/sys/single_threaded.h:
+
+/usr/include/c++/15/bits/predefined_ops.h:
+
+/home/shaunfell/Documents/Github/warpdrive_simulator/src/main.cpp:
+
+/usr/include/c++/15/bits/move.h:
+
+/usr/lib64/libX11.so.6:
+
+/home/shaunfell/Documents/Github/warpdrive_simulator/src/simulation/spacetime_manager.h:
+
+/usr/include/bits/stdint-least.h:
+
+/usr/include/c++/15/bits/stringfwd.h:
+
+/usr/include/c++/15/bits/memoryfwd.h:
+
+/usr/include/glm/vec3.hpp:
+
+/usr/include/c++/15/tr1/beta_function.tcc:
+
+/usr/include/c++/15/bits/memory_resource.h:
+
+/usr/include/bits/types/struct_timespec.h:
+
+/lib64/libm.so.6:
+
+/usr/include/c++/15/algorithm:
+
+/usr/lib/gcc/x86_64-redhat-linux/15/include/limits.h:
+
+/usr/include/c++/15/bits/hash_bytes.h:
+
+/usr/include/glm/ext/matrix_double3x2_precision.hpp:
+
+/usr/include/glm/ext/vector_uint4_sized.hpp:
+
+/usr/include/glm/detail/type_mat3x3.inl:
+
+/usr/lib/gcc/x86_64-redhat-linux/15/libgcc_s.so:
+
+/usr/include/c++/15/bits/cxxabi_forced.h:
 
 /usr/include/c++/15/cmath:
 
@@ -1288,51 +1429,11 @@ CMakeFiles/WarpDriveSimulator.dir/src/simulation/spacetime_manager.cpp.o: /home/
 
 /usr/include/endian.h:
 
-/usr/include/c++/15/climits:
+/usr/include/c++/15/bits/streambuf.tcc:
 
-/usr/include/glm/detail/func_packing.inl:
+/usr/include/c++/15/bits/basic_string.tcc:
 
-/usr/include/c++/15/bits/utility.h:
-
-/usr/include/c++/15/bits/stl_bvector.h:
-
-/usr/include/glm/detail/_vectorize.hpp:
-
-/usr/include/c++/15/bits/stl_pair.h:
-
-/usr/include/limits.h:
-
-/usr/include/bits/select.h:
-
-/usr/include/c++/15/bits/std_abs.h:
-
-/home/shaunfell/Documents/Github/warpdrive_simulator/src/core/spacetime_metric.cpp:
-
-/usr/include/glm/ext/vector_bool2_precision.hpp:
-
-/usr/include/c++/15/bits/stl_construct.h:
-
-/usr/include/c++/15/bits/ptr_traits.h:
-
-/usr/include/sys/single_threaded.h:
-
-/usr/include/c++/15/bits/predefined_ops.h:
-
-/usr/include/glm/ext/vector_float4.hpp:
-
-/home/shaunfell/Documents/Github/warpdrive_simulator/src/main.cpp:
-
-/usr/include/c++/15/bits/move.h:
-
-/home/shaunfell/Documents/Github/warpdrive_simulator/src/simulation/spacetime_manager.h:
-
-/usr/include/bits/stdint-least.h:
-
-/usr/include/errno.h:
-
-/usr/include/c++/15/cstddef:
-
-/usr/include/glm/ext/matrix_transform.hpp:
+/usr/include/c++/15/bits/basic_string.h:
 
 /usr/include/bits/wctype-wchar.h:
 
@@ -1342,6 +1443,8 @@ CMakeFiles/WarpDriveSimulator.dir/src/simulation/spacetime_manager.cpp.o: /home/
 
 /usr/include/glm/ext/matrix_double4x3_precision.hpp:
 
+/usr/include/c++/15/bits/uses_allocator_args.h:
+
 /usr/include/c++/15/bits/stl_heap.h:
 
 /usr/include/c++/15/backward/auto_ptr.h:
@@ -1350,43 +1453,77 @@ CMakeFiles/WarpDriveSimulator.dir/src/simulation/spacetime_manager.cpp.o: /home/
 
 /usr/include/bits/types/timer_t.h:
 
-/usr/include/c++/15/bits/allocator.h:
+/usr/include/bits/xopen_lim.h:
 
-/usr/include/asm-generic/posix_types.h:
+/usr/lib64/crti.o:
 
-/usr/include/c++/15/bit:
+/usr/include/stdio.h:
 
-/usr/include/glm/ext/vector_uint2_sized.hpp:
+/usr/include/bits/wordsize.h:
 
-/usr/include/c++/15/cfloat:
+/usr/include/bits/timesize.h:
 
-/usr/include/c++/15/ext/numeric_traits.h:
+/usr/include/bits/waitflags.h:
 
-/usr/include/glm/ext/matrix_double4x2.hpp:
+/usr/lib64/libc.so:
 
-/usr/include/bits/pthreadtypes-arch.h:
+/usr/include/ctype.h:
 
-/usr/include/math.h:
+/usr/include/glm/detail/type_mat3x2.inl:
 
-/usr/include/glm/common.hpp:
+/usr/include/glm/ext/matrix_projection.hpp:
 
-/usr/include/gnu/stubs.h:
+/usr/include/glm/ext/vector_double2_precision.hpp:
 
-/usr/include/c++/15/memory:
+/usr/include/bits/uintn-identity.h:
 
-/usr/include/glm/detail/_fixes.hpp:
+/usr/include/glm/ext/scalar_constants.hpp:
 
-/usr/include/glm/mat3x3.hpp:
+/usr/include/bits/typesizes.h:
+
+/usr/include/c++/15/bits/locale_facets.h:
+
+/usr/include/glm/ext/scalar_int_sized.hpp:
+
+/usr/include/bits/types/wint_t.h:
+
+/usr/include/glm/ext/matrix_float3x2_precision.hpp:
+
+/usr/include/c++/15/cctype:
+
+/usr/include/bits/types/struct_FILE.h:
+
+/usr/include/bits/cpu-set.h:
+
+/usr/include/c++/15/bits/new_allocator.h:
+
+/usr/include/bits/types/sigset_t.h:
+
+/usr/include/c++/15/tr1/poly_hermite.tcc:
+
+/usr/include/bits/types/mbstate_t.h:
+
+/usr/include/bits/mathcalls-narrow.h:
+
+/usr/include/c++/15/initializer_list:
+
+/usr/include/glm/detail/func_common.inl:
+
+/usr/include/glm/ext/matrix_float2x4_precision.hpp:
 
 /usr/include/bits/long-double.h:
 
 /usr/include/bits/fp-logb.h:
 
-/usr/include/glm/vector_relational.hpp:
+/usr/include/asm-generic/errno.h:
 
-/usr/include/c++/15/bits/postypes.h:
+/usr/include/c++/15/bits/stl_construct.h:
 
-/usr/include/bits/local_lim.h:
+/usr/include/c++/15/bits/ptr_traits.h:
+
+/usr/include/bits/errno.h:
+
+/usr/include/bits/locale.h:
 
 /usr/include/c++/15/cassert:
 
@@ -1398,49 +1535,31 @@ CMakeFiles/WarpDriveSimulator.dir/src/simulation/spacetime_manager.cpp.o: /home/
 
 /usr/include/c++/15/concepts:
 
+/usr/include/glm/ext/matrix_float2x3_precision.hpp:
+
+/usr/include/bits/posix2_lim.h:
+
+/usr/include/bits/types/__fpos_t.h:
+
 /usr/include/bits/mathcalls.h:
 
 /usr/include/glm/detail/type_mat3x3.hpp:
 
+/usr/include/glm/ext/vector_uint3.hpp:
+
+/usr/include/bits/libc-header-start.h:
+
+/usr/include/c++/15/bits/functional_hash.h:
+
+/usr/include/c++/15/ext/type_traits.h:
+
 /usr/include/bits/iscanonical.h:
 
-/usr/include/bits/pthread_stack_min-dynamic.h:
+/usr/include/linux/posix_types.h:
 
-/usr/include/bits/types.h:
+/usr/include/bits/types/FILE.h:
 
-/usr/include/glm/detail/type_mat2x2.hpp:
-
-/usr/include/glm/mat3x4.hpp:
-
-/usr/include/wctype.h:
-
-/usr/include/sched.h:
-
-/usr/include/glm/detail/func_exponential.inl:
-
-/usr/include/bits/fp-fast.h:
-
-/usr/include/bits/timesize.h:
-
-/usr/include/glm/detail/type_half.hpp:
-
-/usr/include/c++/15/tr1/beta_function.tcc:
-
-/usr/include/glm/vec3.hpp:
-
-/usr/include/c++/15/tr1/riemann_zeta.tcc:
-
-/usr/include/asm/errno.h:
-
-/usr/include/bits/stdint-uintn.h:
-
-/usr/include/bits/pthreadtypes.h:
-
-/usr/include/glm/fwd.hpp:
-
-/usr/include/c++/15/tr1/poly_hermite.tcc:
-
-/usr/include/bits/types/sigset_t.h:
+/usr/include/bits/types/__locale_t.h:
 
 /usr/include/c++/15/ext/concurrence.h:
 
@@ -1448,47 +1567,77 @@ CMakeFiles/WarpDriveSimulator.dir/src/simulation/spacetime_manager.cpp.o: /home/
 
 /usr/include/bits/floatn-common.h:
 
-/usr/include/bits/types/__FILE.h:
+/usr/include/c++/15/ostream:
 
-/usr/include/bits/sched.h:
+/usr/include/c++/15/bits/exception.h:
 
-/usr/include/features.h:
+/usr/include/glm/detail/compute_common.hpp:
 
-/usr/include/bits/endianness.h:
+/usr/include/bits/floatn.h:
+
+/usr/include/c++/15/bits/refwrap.h:
+
+/usr/include/c++/15/type_traits:
+
+/usr/include/c++/15/bits/stl_function.h:
+
+/usr/include/c++/15/cwchar:
 
 /usr/include/c++/15/ios:
 
 /home/shaunfell/Documents/Github/warpdrive_simulator/src/core/types.h:
 
-/usr/include/glm/ext/vector_bool2.hpp:
+/usr/include/glm/ext/vector_bool4_precision.hpp:
+
+/usr/include/alloca.h:
+
+/usr/lib/gcc/x86_64-redhat-linux/15/crtend.o:
 
 /usr/include/c++/15/bits/stl_iterator_base_types.h:
+
+/usr/include/asm-generic/posix_types.h:
+
+/usr/include/c++/15/bit:
+
+/usr/include/c++/15/bits/allocator.h:
+
+/usr/include/glm/ext/matrix_double2x3.hpp:
 
 /usr/include/glm/detail/compute_vector_relational.hpp:
 
 /usr/include/bits/types/__sigset_t.h:
 
-/usr/include/c++/15/tr1/special_function_util.h:
+/usr/include/asm-generic/errno-base.h:
 
-/usr/include/bits/waitflags.h:
+/usr/include/bits/flt-eval-method.h:
 
-/usr/include/glm/detail/type_mat3x2.inl:
+/home/shaunfell/Documents/Github/warpdrive_simulator/src/core/flat_spacetime.cpp:
 
-/usr/include/glm/ext/matrix_projection.hpp:
+/usr/include/bits/select.h:
 
-/usr/include/c++/15/bits/locale_facets.h:
+/usr/include/glm/ext/vector_double4.hpp:
 
-/usr/include/bits/types/wint_t.h:
+/usr/include/c++/15/bits/version.h:
 
-/usr/include/glm/ext/scalar_int_sized.hpp:
+/usr/include/glm/ext/matrix_float4x2_precision.hpp:
 
-/usr/include/glm/packing.hpp:
+/usr/include/bits/pthreadtypes-arch.h:
+
+/usr/include/math.h:
+
+/usr/include/glm/common.hpp:
 
 /usr/include/glm/ext/vector_int3_sized.hpp:
 
 /usr/include/assert.h:
 
 /usr/include/bits/libm-simd-decl-stubs.h:
+
+/usr/include/bits/endianness.h:
+
+/usr/include/glm/mat4x4.hpp:
+
+/usr/include/c++/15/bits/char_traits.h:
 
 /usr/include/bits/byteswap.h:
 
@@ -1498,45 +1647,73 @@ CMakeFiles/WarpDriveSimulator.dir/src/simulation/spacetime_manager.cpp.o: /home/
 
 /usr/include/bits/stdlib-float.h:
 
-/usr/include/c++/15/bits/stl_vector.h:
-
-/usr/include/c++/15/x86_64-redhat-linux/bits/os_defines.h:
-
-/usr/include/glm/mat2x4.hpp:
-
-/usr/include/c++/15/bits/functexcept.h:
-
 /usr/include/c++/15/bits/concept_check.h:
 
 /usr/include/bits/math-vector.h:
 
 /usr/include/bits/uio_lim.h:
 
-/home/shaunfell/Documents/Github/warpdrive_simulator/src/core/flat_spacetime.cpp:
+/usr/include/wctype.h:
 
-/usr/include/bits/flt-eval-method.h:
+/usr/include/sched.h:
 
-/usr/include/bits/types/__locale_t.h:
+/usr/include/glm/detail/func_exponential.inl:
 
-/usr/include/c++/15/bits/requires_hosted.h:
+/usr/include/bits/fp-fast.h:
+
+/usr/include/bits/pthread_stack_min-dynamic.h:
+
+/usr/include/c++/15/clocale:
+
+/usr/include/c++/15/bits/stl_algobase.h:
+
+CMakeFiles/WarpDriveSimulator.dir/src/main.cpp.o:
+
+/usr/include/bits/pthreadtypes.h:
+
+/usr/include/glm/detail/type_vec2.hpp:
+
+/usr/include/glm/detail/type_mat2x3.inl:
+
+/home/shaunfell/Documents/Github/warpdrive_simulator/src/core/spacetime_metric.h:
 
 /usr/include/glm/ext/vector_uint4.hpp:
 
-/usr/include/glm/detail/func_trigonometric.inl:
+/usr/include/c++/15/bits/requires_hosted.h:
 
-/usr/include/c++/15/bits/invoke.h:
+/usr/include/c++/15/cstdlib:
 
-/usr/include/glm/ext/matrix_double2x2.hpp:
+/usr/include/bits/types/__fpos64_t.h:
 
-/usr/include/glm/ext/vector_bool3_precision.hpp:
+/usr/include/bits/types/struct_timeval.h:
 
-/usr/include/c++/15/bits/stl_algobase.h:
+/usr/lib/gcc/x86_64-redhat-linux/15/include/stddef.h:
+
+/usr/include/c++/15/bits/localefwd.h:
+
+/usr/include/glm/ext/matrix_double3x3_precision.hpp:
+
+/usr/include/glm/ext/matrix_double2x2_precision.hpp:
+
+/usr/include/bits/stdio_lim.h:
+
+/usr/include/bits/types/__mbstate_t.h:
+
+/usr/include/bits/sched.h:
+
+/usr/include/features.h:
+
+/usr/include/bits/types/__FILE.h:
 
 /usr/include/bits/struct_mutex.h:
 
 /usr/include/glm/detail/type_mat4x4.hpp:
 
-/usr/include/glm/ext/vector_int4_sized.hpp:
+/usr/include/bits/types/time_t.h:
+
+/usr/include/c++/15/bits/uses_allocator.h:
+
+/usr/include/bits/struct_rwlock.h:
 
 /usr/include/bits/thread-shared-types.h:
 
@@ -1544,69 +1721,177 @@ CMakeFiles/WarpDriveSimulator.dir/src/simulation/spacetime_manager.cpp.o: /home/
 
 /usr/include/bits/endian.h:
 
-/usr/include/c++/15/pstl/pstl_config.h:
+/usr/lib64/libOpenGL.so:
+
+/usr/include/c++/15/bits/ostream_insert.h:
+
+/usr/include/bits/types/error_t.h:
 
 /usr/include/c++/15/backward/binders.h:
 
 /usr/include/c++/15/bits/specfun.h:
 
+/usr/include/c++/15/tr1/exp_integral.tcc:
+
+/usr/include/c++/15/bits/postypes.h:
+
+/usr/include/bits/local_lim.h:
+
+/usr/include/c++/15/cstdio:
+
 /usr/include/bits/atomic_wide_counter.h:
 
 /usr/include/glm/ext/matrix_float3x2.hpp:
 
-/usr/include/glm/detail/func_matrix.inl:
+/usr/include/asm/errno.h:
+
+/usr/include/bits/stdint-uintn.h:
+
+/usr/include/bits/types/cookie_io_functions_t.h:
+
+/usr/include/c++/15/bits/alloc_traits.h:
 
 /usr/include/bits/types/locale_t.h:
 
-/usr/include/glm/ext/vector_int3.hpp:
+/usr/include/glm/ext/matrix_transform.hpp:
 
-/usr/include/bits/types/struct_timespec.h:
-
-/usr/include/bits/types/struct_timeval.h:
-
-/usr/include/c++/15/bits/localefwd.h:
-
-/usr/lib/gcc/x86_64-redhat-linux/15/include/stddef.h:
-
-/usr/include/glm/ext/matrix_double3x3_precision.hpp:
-
-/usr/include/c++/15/bits/uses_allocator.h:
-
-/usr/include/bits/struct_rwlock.h:
-
-/usr/include/c++/15/vector:
-
-/usr/include/glm/ext/vector_uint3_sized.hpp:
-
-/usr/include/bits/types/time_t.h:
-
-/usr/include/bits/typesizes.h:
-
-/usr/include/c++/15/debug/debug.h:
+/usr/include/c++/15/cstdint:
 
 /usr/include/glm/ext/matrix_double3x4_precision.hpp:
 
-/usr/include/glm/ext/scalar_constants.hpp:
+/usr/include/c++/15/debug/debug.h:
 
-/usr/include/stdio.h:
+/usr/include/glm/ext/vector_uint2.hpp:
 
-/usr/include/bits/wordsize.h:
+/usr/include/c++/15/ext/alloc_traits.h:
 
-/usr/include/bits/libc-header-start.h:
+/usr/lib64/libc_nonshared.a:
 
-/usr/include/glm/ext/vector_uint3.hpp:
+/usr/include/glm/ext/matrix_double4x2.hpp:
 
-/usr/include/bits/xopen_lim.h:
+/usr/include/c++/15/ext/numeric_traits.h:
 
-/usr/include/c++/15/tr1/gamma.tcc:
+/usr/include/glm/detail/func_geometric.inl:
+
+/usr/include/c++/15/ext/string_conversions.h:
+
+/usr/include/c++/15/bits/stl_vector.h:
+
+/usr/include/glm/mat2x4.hpp:
+
+/usr/include/c++/15/bits/functexcept.h:
+
+/usr/include/c++/15/x86_64-redhat-linux/bits/os_defines.h:
+
+/usr/include/c++/15/iosfwd:
+
+CMakeFiles/WarpDriveSimulator.dir/src/rendering/renderer.cpp.o:
+
+/usr/include/c++/15/limits:
+
+/usr/lib64/libglfw.so:
+
+/usr/include/linux/errno.h:
+
+/usr/include/c++/15/new:
+
+/usr/include/glm/detail/type_vec2.inl:
+
+/usr/include/c++/15/pstl/pstl_config.h:
+
+/usr/include/glm/trigonometric.hpp:
+
+/usr/include/c++/15/string:
+
+/usr/include/c++/15/cwctype:
+
+/usr/include/glm/ext/scalar_constants.inl:
+
+/usr/include/c++/15/tr1/bessel_function.tcc:
+
+/usr/include/glm/matrix.hpp:
+
+/usr/include/glm/ext/vector_bool3.hpp:
+
+/usr/include/c++/15/tr1/ell_integral.tcc:
 
 /usr/include/glm/detail/type_mat2x2.inl:
 
-/usr/include/glm/mat2x2.hpp:
+/usr/include/c++/15/tr1/gamma.tcc:
 
-/usr/include/glm/detail/qualifier.hpp:
+/usr/include/c++/15/x86_64-redhat-linux/bits/cpu_defines.h:
+
+/usr/include/glm/detail/type_mat3x4.hpp:
+
+/usr/include/bits/mathcalls-macros.h:
+
+/usr/include/c++/15/tr1/hypergeometric.tcc:
+
+/usr/include/c++/15/tr1/legendre_function.tcc:
+
+/usr/include/c++/15/tr1/modified_bessel_func.tcc:
+
+/usr/include/c++/15/tr1/riemann_zeta.tcc:
+
+/usr/include/c++/15/tr1/special_function_util.h:
+
+/usr/include/c++/15/tuple:
+
+/usr/include/c++/15/x86_64-redhat-linux/bits/c++allocator.h:
+
+/usr/include/c++/15/x86_64-redhat-linux/bits/c++config.h:
+
+/usr/include/c++/15/cstddef:
+
+/usr/include/errno.h:
+
+/usr/include/features-time64.h:
+
+/usr/include/c++/15/memory:
+
+/usr/include/glm/detail/_fixes.hpp:
+
+/usr/lib64/libGL.so.1:
+
+/usr/include/c++/15/bits/stl_bvector.h:
+
+/usr/include/c++/15/bits/stl_pair.h:
+
+/usr/include/glm/detail/_vectorize.hpp:
+
+/usr/include/stdlib.h:
+
+/usr/include/glm/detail/func_integer.inl:
+
+/usr/include/glm/detail/func_matrix.inl:
+
+/usr/include/c++/15/bits/utility.h:
+
+/usr/include/glm/detail/func_packing.inl:
+
+/usr/include/glm/detail/func_trigonometric.inl:
+
+/usr/include/c++/15/bits/invoke.h:
+
+/usr/include/glm/ext/matrix_double2x2.hpp:
+
+/usr/include/glm/detail/func_vector_relational.inl:
+
+/usr/include/glm/ext/matrix_float4x4_precision.hpp:
+
+/usr/include/glm/detail/type_half.hpp:
+
+/usr/include/c++/15/bits/stl_tempbuf.h:
+
+/usr/include/glm/detail/type_half.inl:
+
+/usr/include/bits/types.h:
+
+/usr/include/glm/detail/type_mat2x2.hpp:
 
 /usr/include/glm/gtc/matrix_transform.inl:
+
+/usr/include/glm/detail/qualifier.hpp:
 
 /usr/include/glm/detail/type_mat2x3.hpp:
 
@@ -1622,12 +1907,6 @@ CMakeFiles/WarpDriveSimulator.dir/src/simulation/spacetime_manager.cpp.o: /home/
 
 /usr/include/glm/detail/type_mat2x4.inl:
 
-/usr/include/asm-generic/types.h:
-
-/usr/include/asm-generic/bitsperlong.h:
-
-/usr/include/glm/ext/vector_bool4.hpp:
-
 /usr/include/c++/15/bits/stl_algo.h:
 
 /usr/include/glm/detail/type_mat3x2.hpp:
@@ -1640,11 +1919,13 @@ CMakeFiles/WarpDriveSimulator.dir/src/simulation/spacetime_manager.cpp.o: /home/
 
 /usr/include/glm/ext/matrix_double4x4.hpp:
 
+CMakeFiles/WarpDriveSimulator.dir/src/core/spacetime_metric.cpp.o:
+
 /usr/include/bits/types/struct___jmp_buf_tag.h:
 
-/usr/include/bits/waitstatus.h:
-
 /usr/include/bits/wchar.h:
+
+/usr/include/bits/waitstatus.h:
 
 /usr/include/glm/detail/type_mat3x4.inl:
 
@@ -1653,14 +1934,6 @@ CMakeFiles/WarpDriveSimulator.dir/src/simulation/spacetime_manager.cpp.o: /home/
 /usr/include/glm/detail/type_mat4x2.hpp:
 
 /usr/include/glm/ext/matrix_double4x2_precision.hpp:
-
-/usr/include/wchar.h:
-
-/usr/include/bits/posix1_lim.h:
-
-/usr/include/glm/mat3x2.hpp:
-
-/usr/include/gnu/stubs-64.h:
 
 /usr/include/glm/detail/type_mat4x3.hpp:
 
@@ -1674,41 +1947,13 @@ CMakeFiles/WarpDriveSimulator.dir/src/simulation/spacetime_manager.cpp.o: /home/
 
 /usr/include/glm/detail/type_mat4x4.inl:
 
-/usr/include/c++/15/tr1/ell_integral.tcc:
-
-/usr/include/glm/matrix.hpp:
-
-/usr/include/glm/ext/vector_bool3.hpp:
+/usr/include/bits/types/struct_tm.h:
 
 /usr/include/c++/15/bits/string_view.tcc:
-
-/usr/include/bits/types/struct_tm.h:
 
 /usr/include/glm/detail/type_vec1.hpp:
 
 /usr/include/glm/detail/type_vec4.inl:
-
-/usr/include/c++/15/bits/locale_classes.tcc:
-
-/usr/include/glm/detail/type_vec1.inl:
-
-/usr/include/glm/ext/matrix_clip_space.hpp:
-
-/home/shaunfell/Documents/Github/warpdrive_simulator/src/core/spacetime_metric.h:
-
-/usr/include/glm/detail/type_mat2x3.inl:
-
-/usr/include/glm/detail/type_vec2.hpp:
-
-/usr/include/bits/stdio_lim.h:
-
-/usr/include/glm/ext/matrix_double2x2_precision.hpp:
-
-/usr/include/glm/ext/matrix_double3x2_precision.hpp:
-
-/usr/include/glm/geometric.hpp:
-
-/usr/include/glm/detail/type_vec2.inl:
 
 /usr/include/sys/cdefs.h:
 
@@ -1723,10 +1968,6 @@ CMakeFiles/WarpDriveSimulator.dir/src/simulation/spacetime_manager.cpp.o: /home/
 /usr/include/glm/detail/type_vec4.hpp:
 
 /usr/include/glm/exponential.hpp:
-
-/usr/include/glm/ext/matrix_double2x3.hpp:
-
-/usr/include/glm/ext/vector_int2_sized.hpp:
 
 /usr/include/glm/ext/matrix_double2x4.hpp:
 
@@ -1764,15 +2005,7 @@ CMakeFiles/WarpDriveSimulator.dir/src/simulation/spacetime_manager.cpp.o: /home/
 
 /usr/include/glm/ext/matrix_float2x3.hpp:
 
-/usr/include/bits/posix2_lim.h:
-
-/usr/include/glm/ext/matrix_float2x3_precision.hpp:
-
 /usr/include/glm/ext/matrix_float2x4.hpp:
-
-/usr/include/glm/ext/vector_float3.hpp:
-
-/usr/include/glm/ext/matrix_float3x2_precision.hpp:
 
 /usr/include/c++/15/bits/stl_iterator.h:
 
@@ -1784,84 +2017,16 @@ CMakeFiles/WarpDriveSimulator.dir/src/simulation/spacetime_manager.cpp.o: /home/
 
 /usr/include/glm/ext/matrix_float3x4_precision.hpp:
 
-/usr/include/glm/mat4x2.hpp:
-
-/usr/include/glm/mat4x3.hpp:
-
 /usr/include/glm/ext/matrix_float4x2.hpp:
 
 /usr/include/glm/ext/matrix_float4x3_precision.hpp:
 
 /usr/include/glm/ext/matrix_float4x4.hpp:
 
+/usr/lib64/libGLdispatch.so.0:
+
 /usr/include/glm/ext/matrix_projection.inl:
 
 /usr/include/glm/ext/matrix_float3x3.hpp:
 
 /usr/include/glm/ext/matrix_transform.inl:
-
-/usr/include/c++/15/cwctype:
-
-/usr/include/glm/ext/scalar_constants.inl:
-
-/usr/include/glm/ext/scalar_uint_sized.hpp:
-
-/usr/include/glm/ext/vector_float2.hpp:
-
-/usr/include/alloca.h:
-
-/usr/include/glm/ext/vector_bool4_precision.hpp:
-
-/usr/include/glm/ext/vector_double2.hpp:
-
-/usr/include/bits/uintn-identity.h:
-
-/usr/include/glm/ext/vector_double2_precision.hpp:
-
-/usr/include/glm/ext/vector_double3_precision.hpp:
-
-/usr/include/glm/ext/matrix_float4x2_precision.hpp:
-
-/usr/include/c++/15/bits/version.h:
-
-/usr/include/glm/ext/vector_double4.hpp:
-
-/usr/include/glm/ext/vector_double4_precision.hpp:
-
-/usr/include/glm/ext/vector_float4_precision.hpp:
-
-/usr/include/glm/ext/vector_float2_precision.hpp:
-
-/usr/include/glm/ext/vector_int2.hpp:
-
-/usr/include/glm/gtc/constants.hpp:
-
-/usr/include/c++/15/ext/alloc_traits.h:
-
-/usr/include/glm/ext/vector_uint2.hpp:
-
-/usr/include/glm/detail/type_mat3x3.inl:
-
-/usr/include/glm/ext/vector_uint4_sized.hpp:
-
-/usr/include/glm/glm.hpp:
-
-/usr/include/glm/gtc/constants.inl:
-
-/home/shaunfell/Documents/Github/warpdrive_simulator/src/rendering/shader.h:
-
-/usr/include/glm/simd/platform.h:
-
-/usr/include/glm/gtc/matrix_transform.hpp:
-
-/usr/include/glm/integer.hpp:
-
-/usr/include/glm/mat2x3.hpp:
-
-/usr/include/c++/15/bits/char_traits.h:
-
-/usr/include/glm/mat4x4.hpp:
-
-/usr/include/c++/15/string:
-
-/usr/include/glm/trigonometric.hpp:
