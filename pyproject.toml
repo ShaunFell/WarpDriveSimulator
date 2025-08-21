@@ -1,0 +1,30 @@
+[tool.poetry]
+name = "warpdrive-simulator"
+version = "0.1.0"
+description = "A python package to compute the gravitational lensing of a warp drive spacetime with advanced utilities to locate horizons"
+authors = ["Shaun Fell"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.13"
+jax = "^0.7.1"
+
+
+[tool.ruff]
+line-length = 88
+indent-width = 4
+preview = true
+
+[tool.ruff.format]
+docstring-code-format = true
+quote-style = "double"
+skip-magic-trailing-comma = false
+
+[tool.ruff.lint]
+# Ignore specific rules
+ignore = ["E401", "E402", "F401"] # Module level import not at top of file
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

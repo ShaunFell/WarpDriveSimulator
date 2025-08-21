@@ -1,3 +1,0 @@
-/home/shaunfell/Documents/Github/warpdrive_simulator/build/CMakeFiles/WarpDriveSimulator.dir
-/home/shaunfell/Documents/Github/warpdrive_simulator/build/CMakeFiles/edit_cache.dir
-/home/shaunfell/Documents/Github/warpdrive_simulator/build/CMakeFiles/rebuild_cache.dir
