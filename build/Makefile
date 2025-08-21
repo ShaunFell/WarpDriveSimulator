@@ -129,6 +129,30 @@ WarpDriveSimulator/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/WarpDriveSimulator.dir/build.make CMakeFiles/WarpDriveSimulator.dir/build
 .PHONY : WarpDriveSimulator/fast
 
+src/core/alcubierre_metric.o: src/core/alcubierre_metric.cpp.o
+.PHONY : src/core/alcubierre_metric.o
+
+# target to build an object file
+src/core/alcubierre_metric.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/WarpDriveSimulator.dir/build.make CMakeFiles/WarpDriveSimulator.dir/src/core/alcubierre_metric.cpp.o
+.PHONY : src/core/alcubierre_metric.cpp.o
+
+src/core/alcubierre_metric.i: src/core/alcubierre_metric.cpp.i
+.PHONY : src/core/alcubierre_metric.i
+
+# target to preprocess a source file
+src/core/alcubierre_metric.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/WarpDriveSimulator.dir/build.make CMakeFiles/WarpDriveSimulator.dir/src/core/alcubierre_metric.cpp.i
+.PHONY : src/core/alcubierre_metric.cpp.i
+
+src/core/alcubierre_metric.s: src/core/alcubierre_metric.cpp.s
+.PHONY : src/core/alcubierre_metric.s
+
+# target to generate assembly for a file
+src/core/alcubierre_metric.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/WarpDriveSimulator.dir/build.make CMakeFiles/WarpDriveSimulator.dir/src/core/alcubierre_metric.cpp.s
+.PHONY : src/core/alcubierre_metric.cpp.s
+
 src/core/flat_spacetime.o: src/core/flat_spacetime.cpp.o
 .PHONY : src/core/flat_spacetime.o
 
@@ -306,6 +330,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... WarpDriveSimulator"
+	@echo "... src/core/alcubierre_metric.o"
+	@echo "... src/core/alcubierre_metric.i"
+	@echo "... src/core/alcubierre_metric.s"
 	@echo "... src/core/flat_spacetime.o"
 	@echo "... src/core/flat_spacetime.i"
 	@echo "... src/core/flat_spacetime.s"

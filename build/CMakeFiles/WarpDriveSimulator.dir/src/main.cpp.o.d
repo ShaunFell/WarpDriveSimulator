@@ -164,7 +164,7 @@ CMakeFiles/WarpDriveSimulator.dir/src/main.cpp.o: \
  /usr/include/X11/extensions/Xrender.h /usr/include/X11/Xutil.h \
  /usr/include/X11/keysym.h /usr/include/X11/keysymdef.h \
  /usr/include/X11/extensions/render.h /usr/include/X11/Xdefs.h \
- /home/shaunfell/Documents/Github/warpdrive_simulator/src/core/flat_spacetime.h \
+ /home/shaunfell/Documents/Github/warpdrive_simulator/src/core/alcubierre_metric.h \
  /home/shaunfell/Documents/Github/warpdrive_simulator/src/core/spacetime_metric.h \
  /home/shaunfell/Documents/Github/warpdrive_simulator/src/core/types.h \
  /usr/include/glm/glm.hpp /usr/include/glm/detail/_fixes.hpp \
@@ -320,6 +320,7 @@ CMakeFiles/WarpDriveSimulator.dir/src/main.cpp.o: \
  /usr/include/glm/ext/matrix_transform.hpp \
  /usr/include/glm/ext/matrix_transform.inl \
  /usr/include/glm/gtc/matrix_transform.inl \
+ /home/shaunfell/Documents/Github/warpdrive_simulator/src/core/flat_spacetime.h \
  /home/shaunfell/Documents/Github/warpdrive_simulator/src/rendering/camera.h \
  /home/shaunfell/Documents/Github/warpdrive_simulator/src/simulation/spacetime_manager.h \
  /home/shaunfell/Documents/Github/warpdrive_simulator/src/rendering/shader.h \

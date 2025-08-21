@@ -1,5 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/WarpDriveSimulator.dir/link.d"
+  "CMakeFiles/WarpDriveSimulator.dir/src/core/alcubierre_metric.cpp.o"
+  "CMakeFiles/WarpDriveSimulator.dir/src/core/alcubierre_metric.cpp.o.d"
   "CMakeFiles/WarpDriveSimulator.dir/src/core/flat_spacetime.cpp.o"
   "CMakeFiles/WarpDriveSimulator.dir/src/core/flat_spacetime.cpp.o.d"
   "CMakeFiles/WarpDriveSimulator.dir/src/core/spacetime_metric.cpp.o"

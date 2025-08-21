@@ -72,10 +72,24 @@ include CMakeFiles/WarpDriveSimulator.dir/flags.make
 CMakeFiles/WarpDriveSimulator.dir/codegen:
 .PHONY : CMakeFiles/WarpDriveSimulator.dir/codegen
 
+CMakeFiles/WarpDriveSimulator.dir/src/core/alcubierre_metric.cpp.o: CMakeFiles/WarpDriveSimulator.dir/flags.make
+CMakeFiles/WarpDriveSimulator.dir/src/core/alcubierre_metric.cpp.o: /home/shaunfell/Documents/Github/warpdrive_simulator/src/core/alcubierre_metric.cpp
+CMakeFiles/WarpDriveSimulator.dir/src/core/alcubierre_metric.cpp.o: CMakeFiles/WarpDriveSimulator.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/shaunfell/Documents/Github/warpdrive_simulator/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/WarpDriveSimulator.dir/src/core/alcubierre_metric.cpp.o"
+	/usr/lib64/ccache/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/WarpDriveSimulator.dir/src/core/alcubierre_metric.cpp.o -MF CMakeFiles/WarpDriveSimulator.dir/src/core/alcubierre_metric.cpp.o.d -o CMakeFiles/WarpDriveSimulator.dir/src/core/alcubierre_metric.cpp.o -c /home/shaunfell/Documents/Github/warpdrive_simulator/src/core/alcubierre_metric.cpp
+
+CMakeFiles/WarpDriveSimulator.dir/src/core/alcubierre_metric.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/WarpDriveSimulator.dir/src/core/alcubierre_metric.cpp.i"
+	/usr/lib64/ccache/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/shaunfell/Documents/Github/warpdrive_simulator/src/core/alcubierre_metric.cpp > CMakeFiles/WarpDriveSimulator.dir/src/core/alcubierre_metric.cpp.i
+
+CMakeFiles/WarpDriveSimulator.dir/src/core/alcubierre_metric.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/WarpDriveSimulator.dir/src/core/alcubierre_metric.cpp.s"
+	/usr/lib64/ccache/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/shaunfell/Documents/Github/warpdrive_simulator/src/core/alcubierre_metric.cpp -o CMakeFiles/WarpDriveSimulator.dir/src/core/alcubierre_metric.cpp.s
+
 CMakeFiles/WarpDriveSimulator.dir/src/core/flat_spacetime.cpp.o: CMakeFiles/WarpDriveSimulator.dir/flags.make
 CMakeFiles/WarpDriveSimulator.dir/src/core/flat_spacetime.cpp.o: /home/shaunfell/Documents/Github/warpdrive_simulator/src/core/flat_spacetime.cpp
 CMakeFiles/WarpDriveSimulator.dir/src/core/flat_spacetime.cpp.o: CMakeFiles/WarpDriveSimulator.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/shaunfell/Documents/Github/warpdrive_simulator/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/WarpDriveSimulator.dir/src/core/flat_spacetime.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/shaunfell/Documents/Github/warpdrive_simulator/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/WarpDriveSimulator.dir/src/core/flat_spacetime.cpp.o"
 	/usr/lib64/ccache/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/WarpDriveSimulator.dir/src/core/flat_spacetime.cpp.o -MF CMakeFiles/WarpDriveSimulator.dir/src/core/flat_spacetime.cpp.o.d -o CMakeFiles/WarpDriveSimulator.dir/src/core/flat_spacetime.cpp.o -c /home/shaunfell/Documents/Github/warpdrive_simulator/src/core/flat_spacetime.cpp
 
 CMakeFiles/WarpDriveSimulator.dir/src/core/flat_spacetime.cpp.i: cmake_force
@@ -89,7 +103,7 @@ CMakeFiles/WarpDriveSimulator.dir/src/core/flat_spacetime.cpp.s: cmake_force
 CMakeFiles/WarpDriveSimulator.dir/src/core/spacetime_metric.cpp.o: CMakeFiles/WarpDriveSimulator.dir/flags.make
 CMakeFiles/WarpDriveSimulator.dir/src/core/spacetime_metric.cpp.o: /home/shaunfell/Documents/Github/warpdrive_simulator/src/core/spacetime_metric.cpp
 CMakeFiles/WarpDriveSimulator.dir/src/core/spacetime_metric.cpp.o: CMakeFiles/WarpDriveSimulator.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/shaunfell/Documents/Github/warpdrive_simulator/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/WarpDriveSimulator.dir/src/core/spacetime_metric.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/shaunfell/Documents/Github/warpdrive_simulator/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/WarpDriveSimulator.dir/src/core/spacetime_metric.cpp.o"
 	/usr/lib64/ccache/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/WarpDriveSimulator.dir/src/core/spacetime_metric.cpp.o -MF CMakeFiles/WarpDriveSimulator.dir/src/core/spacetime_metric.cpp.o.d -o CMakeFiles/WarpDriveSimulator.dir/src/core/spacetime_metric.cpp.o -c /home/shaunfell/Documents/Github/warpdrive_simulator/src/core/spacetime_metric.cpp
 
 CMakeFiles/WarpDriveSimulator.dir/src/core/spacetime_metric.cpp.i: cmake_force
@@ -103,7 +117,7 @@ CMakeFiles/WarpDriveSimulator.dir/src/core/spacetime_metric.cpp.s: cmake_force
 CMakeFiles/WarpDriveSimulator.dir/src/main.cpp.o: CMakeFiles/WarpDriveSimulator.dir/flags.make
 CMakeFiles/WarpDriveSimulator.dir/src/main.cpp.o: /home/shaunfell/Documents/Github/warpdrive_simulator/src/main.cpp
 CMakeFiles/WarpDriveSimulator.dir/src/main.cpp.o: CMakeFiles/WarpDriveSimulator.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/shaunfell/Documents/Github/warpdrive_simulator/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/WarpDriveSimulator.dir/src/main.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/shaunfell/Documents/Github/warpdrive_simulator/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/WarpDriveSimulator.dir/src/main.cpp.o"
 	/usr/lib64/ccache/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/WarpDriveSimulator.dir/src/main.cpp.o -MF CMakeFiles/WarpDriveSimulator.dir/src/main.cpp.o.d -o CMakeFiles/WarpDriveSimulator.dir/src/main.cpp.o -c /home/shaunfell/Documents/Github/warpdrive_simulator/src/main.cpp
 
 CMakeFiles/WarpDriveSimulator.dir/src/main.cpp.i: cmake_force
@@ -117,7 +131,7 @@ CMakeFiles/WarpDriveSimulator.dir/src/main.cpp.s: cmake_force
 CMakeFiles/WarpDriveSimulator.dir/src/rendering/camera.cpp.o: CMakeFiles/WarpDriveSimulator.dir/flags.make
 CMakeFiles/WarpDriveSimulator.dir/src/rendering/camera.cpp.o: /home/shaunfell/Documents/Github/warpdrive_simulator/src/rendering/camera.cpp
 CMakeFiles/WarpDriveSimulator.dir/src/rendering/camera.cpp.o: CMakeFiles/WarpDriveSimulator.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/shaunfell/Documents/Github/warpdrive_simulator/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/WarpDriveSimulator.dir/src/rendering/camera.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/shaunfell/Documents/Github/warpdrive_simulator/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/WarpDriveSimulator.dir/src/rendering/camera.cpp.o"
 	/usr/lib64/ccache/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/WarpDriveSimulator.dir/src/rendering/camera.cpp.o -MF CMakeFiles/WarpDriveSimulator.dir/src/rendering/camera.cpp.o.d -o CMakeFiles/WarpDriveSimulator.dir/src/rendering/camera.cpp.o -c /home/shaunfell/Documents/Github/warpdrive_simulator/src/rendering/camera.cpp
 
 CMakeFiles/WarpDriveSimulator.dir/src/rendering/camera.cpp.i: cmake_force
@@ -131,7 +145,7 @@ CMakeFiles/WarpDriveSimulator.dir/src/rendering/camera.cpp.s: cmake_force
 CMakeFiles/WarpDriveSimulator.dir/src/rendering/renderer.cpp.o: CMakeFiles/WarpDriveSimulator.dir/flags.make
 CMakeFiles/WarpDriveSimulator.dir/src/rendering/renderer.cpp.o: /home/shaunfell/Documents/Github/warpdrive_simulator/src/rendering/renderer.cpp
 CMakeFiles/WarpDriveSimulator.dir/src/rendering/renderer.cpp.o: CMakeFiles/WarpDriveSimulator.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/shaunfell/Documents/Github/warpdrive_simulator/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/WarpDriveSimulator.dir/src/rendering/renderer.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/shaunfell/Documents/Github/warpdrive_simulator/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/WarpDriveSimulator.dir/src/rendering/renderer.cpp.o"
 	/usr/lib64/ccache/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/WarpDriveSimulator.dir/src/rendering/renderer.cpp.o -MF CMakeFiles/WarpDriveSimulator.dir/src/rendering/renderer.cpp.o.d -o CMakeFiles/WarpDriveSimulator.dir/src/rendering/renderer.cpp.o -c /home/shaunfell/Documents/Github/warpdrive_simulator/src/rendering/renderer.cpp
 
 CMakeFiles/WarpDriveSimulator.dir/src/rendering/renderer.cpp.i: cmake_force
@@ -145,7 +159,7 @@ CMakeFiles/WarpDriveSimulator.dir/src/rendering/renderer.cpp.s: cmake_force
 CMakeFiles/WarpDriveSimulator.dir/src/rendering/shader.cpp.o: CMakeFiles/WarpDriveSimulator.dir/flags.make
 CMakeFiles/WarpDriveSimulator.dir/src/rendering/shader.cpp.o: /home/shaunfell/Documents/Github/warpdrive_simulator/src/rendering/shader.cpp
 CMakeFiles/WarpDriveSimulator.dir/src/rendering/shader.cpp.o: CMakeFiles/WarpDriveSimulator.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/shaunfell/Documents/Github/warpdrive_simulator/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/WarpDriveSimulator.dir/src/rendering/shader.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/shaunfell/Documents/Github/warpdrive_simulator/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/WarpDriveSimulator.dir/src/rendering/shader.cpp.o"
 	/usr/lib64/ccache/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/WarpDriveSimulator.dir/src/rendering/shader.cpp.o -MF CMakeFiles/WarpDriveSimulator.dir/src/rendering/shader.cpp.o.d -o CMakeFiles/WarpDriveSimulator.dir/src/rendering/shader.cpp.o -c /home/shaunfell/Documents/Github/warpdrive_simulator/src/rendering/shader.cpp
 
 CMakeFiles/WarpDriveSimulator.dir/src/rendering/shader.cpp.i: cmake_force
@@ -159,7 +173,7 @@ CMakeFiles/WarpDriveSimulator.dir/src/rendering/shader.cpp.s: cmake_force
 CMakeFiles/WarpDriveSimulator.dir/src/simulation/spacetime_manager.cpp.o: CMakeFiles/WarpDriveSimulator.dir/flags.make
 CMakeFiles/WarpDriveSimulator.dir/src/simulation/spacetime_manager.cpp.o: /home/shaunfell/Documents/Github/warpdrive_simulator/src/simulation/spacetime_manager.cpp
 CMakeFiles/WarpDriveSimulator.dir/src/simulation/spacetime_manager.cpp.o: CMakeFiles/WarpDriveSimulator.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/shaunfell/Documents/Github/warpdrive_simulator/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/WarpDriveSimulator.dir/src/simulation/spacetime_manager.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/shaunfell/Documents/Github/warpdrive_simulator/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/WarpDriveSimulator.dir/src/simulation/spacetime_manager.cpp.o"
 	/usr/lib64/ccache/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/WarpDriveSimulator.dir/src/simulation/spacetime_manager.cpp.o -MF CMakeFiles/WarpDriveSimulator.dir/src/simulation/spacetime_manager.cpp.o.d -o CMakeFiles/WarpDriveSimulator.dir/src/simulation/spacetime_manager.cpp.o -c /home/shaunfell/Documents/Github/warpdrive_simulator/src/simulation/spacetime_manager.cpp
 
 CMakeFiles/WarpDriveSimulator.dir/src/simulation/spacetime_manager.cpp.i: cmake_force
@@ -172,6 +186,7 @@ CMakeFiles/WarpDriveSimulator.dir/src/simulation/spacetime_manager.cpp.s: cmake_
 
 # Object files for target WarpDriveSimulator
 WarpDriveSimulator_OBJECTS = \
+"CMakeFiles/WarpDriveSimulator.dir/src/core/alcubierre_metric.cpp.o" \
 "CMakeFiles/WarpDriveSimulator.dir/src/core/flat_spacetime.cpp.o" \
 "CMakeFiles/WarpDriveSimulator.dir/src/core/spacetime_metric.cpp.o" \
 "CMakeFiles/WarpDriveSimulator.dir/src/main.cpp.o" \
@@ -183,6 +198,7 @@ WarpDriveSimulator_OBJECTS = \
 # External object files for target WarpDriveSimulator
 WarpDriveSimulator_EXTERNAL_OBJECTS =
 
+WarpDriveSimulator: CMakeFiles/WarpDriveSimulator.dir/src/core/alcubierre_metric.cpp.o
 WarpDriveSimulator: CMakeFiles/WarpDriveSimulator.dir/src/core/flat_spacetime.cpp.o
 WarpDriveSimulator: CMakeFiles/WarpDriveSimulator.dir/src/core/spacetime_metric.cpp.o
 WarpDriveSimulator: CMakeFiles/WarpDriveSimulator.dir/src/main.cpp.o
@@ -196,7 +212,7 @@ WarpDriveSimulator: /usr/lib64/libGLEW.so
 WarpDriveSimulator: /usr/lib64/libGLX.so
 WarpDriveSimulator: /usr/lib64/libOpenGL.so
 WarpDriveSimulator: CMakeFiles/WarpDriveSimulator.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/shaunfell/Documents/Github/warpdrive_simulator/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Linking CXX executable WarpDriveSimulator"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/shaunfell/Documents/Github/warpdrive_simulator/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Linking CXX executable WarpDriveSimulator"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/WarpDriveSimulator.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

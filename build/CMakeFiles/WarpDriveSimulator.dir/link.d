@@ -2,6 +2,7 @@ WarpDriveSimulator: \
   /usr/lib/gcc/x86_64-redhat-linux/15/../../../../lib64/crt1.o \
   /usr/lib/gcc/x86_64-redhat-linux/15/../../../../lib64/crti.o \
   /usr/lib/gcc/x86_64-redhat-linux/15/crtbegin.o \
+  CMakeFiles/WarpDriveSimulator.dir/src/core/alcubierre_metric.cpp.o \
   CMakeFiles/WarpDriveSimulator.dir/src/core/flat_spacetime.cpp.o \
   CMakeFiles/WarpDriveSimulator.dir/src/core/spacetime_metric.cpp.o \
   CMakeFiles/WarpDriveSimulator.dir/src/main.cpp.o \
@@ -52,6 +53,8 @@ WarpDriveSimulator: \
 /usr/lib/gcc/x86_64-redhat-linux/15/../../../../lib64/crti.o:
 
 /usr/lib/gcc/x86_64-redhat-linux/15/crtbegin.o:
+
+CMakeFiles/WarpDriveSimulator.dir/src/core/alcubierre_metric.cpp.o:
 
 CMakeFiles/WarpDriveSimulator.dir/src/core/flat_spacetime.cpp.o:
 
