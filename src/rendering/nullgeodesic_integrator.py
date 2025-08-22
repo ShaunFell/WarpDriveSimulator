@@ -2,6 +2,7 @@ import jax
 import jax.numpy as jnp
 from typing import Tuple, Optional, Callable
 from dataclasses import dataclass
+import time
 
 from src.abstract.spacetime import Spacetime
 
@@ -50,7 +51,7 @@ class LightRayIntegrator:
         self.config = config or IntegrationConfig()
 
         # JIT compile integration functions for performance
-        self._rk4_step = jax.jit(self._rk4_step_impl)
+        self._rk4_step = self._rk4_step_impl  # jax.jit(self._rk4_step_impl)
         self._compute_acceleration = jax.jit(self._compute_acceleration_impl)
 
     def integrate_ray(
@@ -151,31 +152,43 @@ class LightRayIntegrator:
         Returns:
             Tuple of (new_position, new_direction)
         """
+
+        print("step")
         # RK4 coefficients for position (dx/dλ = v)
+        start1 = time.time()
         k1_pos = direction
         k1_dir = self._compute_acceleration_impl(position, direction)
 
+        end1 = time.time()
         k2_pos = direction + 0.5 * step_size * k1_dir
         k2_dir = self._compute_acceleration_impl(
             position + 0.5 * step_size * k1_pos, direction + 0.5 * step_size * k1_dir
         )
-
+        end2 = time.time()
         k3_pos = direction + 0.5 * step_size * k2_dir
         k3_dir = self._compute_acceleration_impl(
             position + 0.5 * step_size * k2_pos, direction + 0.5 * step_size * k2_dir
         )
-
+        end3 = time.time()
         k4_pos = direction + step_size * k3_dir
         k4_dir = self._compute_acceleration_impl(
             position + step_size * k3_pos, direction + step_size * k3_dir
         )
-
+        end4 = time.time()
         # Combine RK4 terms
         new_position = position + (step_size / 6.0) * (
             k1_pos + 2 * k2_pos + 2 * k3_pos + k4_pos
         )
         new_direction = direction + (step_size / 6.0) * (
             k1_dir + 2 * k2_dir + 2 * k3_dir + k4_dir
+        )
+        end5 = time.time()
+        print(
+            f"k1 {end1 - start1}\n"
+            f"k2 {end2 - end1}\n"
+            f"k3 {end3 - end2}\n"
+            f"k4 {end4 - end3}\n"
+            f"new {end5 - end4}\n"
         )
 
         return new_position, new_direction
@@ -210,6 +223,7 @@ class LightRayIntegrator:
             # Sum over Christoffel symbols: -Γ^μ_νρ v^ν v^ρ
             for nu in range(4):
                 for rho in range(4):
+                    print("compute")
                     gamma = self.spacetime.christoffel(
                         (mu, nu, rho), t_arr, x_arr, y_arr, z_arr
                     )

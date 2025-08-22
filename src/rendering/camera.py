@@ -7,6 +7,7 @@ import numpy as np
 
 from src.abstract.spacetime import Spacetime
 from src.rendering.nullgeodesic_integrator import LightRayIntegrator, create_camera_ray
+from src.rendering.nullgeodesic_integrator import IntegrationConfig
 
 
 class ProjectionType(Enum):
@@ -83,8 +84,6 @@ class SpacetimeCamera:
         self.params = camera_params or CameraParams()
 
         # Initialize ray integrator
-        from src.rendering.geodesic_integrator import IntegrationConfig
-
         integrator_config = integrator_config or IntegrationConfig()
         self.ray_integrator = LightRayIntegrator(spacetime, integrator_config)
 
@@ -156,11 +155,13 @@ class SpacetimeCamera:
         scene_function: Callable,
         background_function: Optional[Callable] = None,
         batch_size: int = 1000,
+        use_pmap: bool = True,
     ) -> jnp.ndarray:
         """
         Vectorized version of image rendering for better performance.
 
         Processes pixels in batches to balance memory usage and speed.
+        Uses pmap for parallel processing across devices/cores.
         """
         if background_function is None:
             background_function = lambda ray_pos, ray_dir: jnp.array([0.0, 0.0, 0.0])
@@ -176,6 +177,37 @@ class SpacetimeCamera:
         for y in range(self.params.height):
             for x in range(self.params.width):
                 pixel_coords.append((x, y))
+
+        if use_pmap and jax.device_count() > 1:
+            return self._render_with_pmap(
+                camera_state,
+                scene_function,
+                background_function,
+                pixel_coords,
+                batch_size,
+            )
+        else:
+            return self._render_sequential_batches(
+                camera_state,
+                scene_function,
+                background_function,
+                pixel_coords,
+                batch_size,
+                image,
+            )
+
+    def _render_sequential_batches(
+        self,
+        camera_state: CameraState,
+        scene_function: Callable,
+        background_function: Callable,
+        pixel_coords: list,
+        batch_size: int,
+        image: jnp.ndarray,
+    ) -> jnp.ndarray:
+        """Sequential batch processing (fallback when pmap not available)."""
+
+        total_pixels = len(pixel_coords)
 
         # Process in batches
         for batch_start in range(0, total_pixels, batch_size):
@@ -202,6 +234,236 @@ class SpacetimeCamera:
             # Update image with batch results
             for i, (x, y) in enumerate(batch_coords):
                 image = image.at[y, x].set(batch_colors[i])
+
+        return image
+
+    def _render_with_pmap(
+        self,
+        camera_state: CameraState,
+        scene_function: Callable,
+        background_function: Callable,
+        pixel_coords: list,
+        batch_size: int,
+    ) -> jnp.ndarray:
+        """Parallel batch processing using pmap."""
+
+        # Get number of devices
+        num_devices = jax.device_count()
+        print(f"Using pmap with {num_devices} devices for parallel rendering")
+
+        # Adjust batch size for parallel processing
+        parallel_batch_size = max(batch_size // num_devices, 1)
+        total_pixels = len(pixel_coords)
+
+        # Pad pixel coordinates to make them divisible by num_devices
+        remainder = total_pixels % num_devices
+        if remainder != 0:
+            padding_needed = num_devices - remainder
+            # Pad with dummy coordinates (will be masked out)
+            pixel_coords.extend([(-1, -1)] * padding_needed)
+
+        # Reshape into device batches
+        pixels_per_device = len(pixel_coords) // num_devices
+        pixel_batches = []
+
+        for device_idx in range(num_devices):
+            start_idx = device_idx * pixels_per_device
+            end_idx = start_idx + pixels_per_device
+            device_pixels = pixel_coords[start_idx:end_idx]
+            pixel_batches.append(device_pixels)
+
+        pixel_batches = jnp.array(pixel_batches)
+
+        # Define the parallel batch processing function
+        @jax.pmap
+        def process_device_batch(device_pixel_batch):
+            """Process a batch of pixels on one device."""
+
+            def process_pixel(pixel_pair):
+                x = pixel_pair[0].astype(int)
+                y = pixel_pair[1].astype(int)
+
+                # Branch: dummy pixels vs. real pixels
+                def dummy_branch(_):
+                    return jnp.array([0.0, 0.0, 0.0])
+
+                def real_branch(_):
+                    ray_pos, ray_dir = self.generate_pixel_ray(camera_state, x, y)
+
+                    positions, directions, affine_params = (
+                        self.ray_integrator.integrate_ray(
+                            ray_pos, ray_dir, max_affine_parameter=self.params.far_clip
+                        )
+                    )
+
+                    # You can’t "catch exceptions", so instead you need to make
+                    # scene_function & background_function *total* (always return something).
+                    # A common trick: use NaN checks or masks to decide.
+                    pixel_color = scene_function(positions, directions, affine_params)
+
+                    # Example safeguard: if integration produced NaNs, fall back to background
+                    invalid = jnp.any(jnp.isnan(positions))
+                    pixel_color = jax.lax.cond(
+                        invalid,
+                        lambda _: background_function(ray_pos, ray_dir),
+                        lambda _: pixel_color,
+                        operand=None,
+                    )
+                    return pixel_color
+
+                return jax.lax.cond(
+                    (x < 0) | (y < 0), dummy_branch, real_branch, operand=None
+                )
+
+            device_colors = jax.vmap(process_pixel)(device_pixel_batch)
+            return device_colors
+
+        # Process all device batches in parallel
+        all_colors = process_device_batch(pixel_batches)
+
+        # Reshape results back to image
+        image = jnp.zeros((self.params.height, self.params.width, 3))
+
+        # Flatten the parallel results
+        flat_colors = all_colors.reshape(-1, 3)
+        original_pixel_coords = pixel_coords[:total_pixels]  # Remove padding
+
+        # Fill in the image
+        for i, (x, y) in enumerate(original_pixel_coords):
+            if x >= 0 and y >= 0:  # Skip dummy pixels
+                image = image.at[y, x].set(flat_colors[i])
+
+        return image
+
+    def render_image_chunked_pmap(
+        self,
+        camera_state: CameraState,
+        scene_function: Callable,
+        background_function: Optional[Callable] = None,
+        chunk_size: int = 64,
+    ) -> jnp.ndarray:
+        """
+        Alternative pmap implementation that processes rectangular chunks.
+
+        This can be more efficient for larger images as it processes
+        spatial chunks rather than arbitrary pixel batches.
+        """
+        if background_function is None:
+            background_function = lambda ray_pos, ray_dir: jnp.array([0.0, 0.0, 0.0])
+
+        camera_state = self._normalize_camera_basis(camera_state)
+
+        # Divide image into square chunks
+        height, width = self.params.height, self.params.width
+
+        # Calculate chunk grid
+        chunks_y = (height + chunk_size - 1) // chunk_size
+        chunks_x = (width + chunk_size - 1) // chunk_size
+
+        # Pad to make divisible by number of devices
+        num_devices = jax.device_count()
+        total_chunks = chunks_y * chunks_x
+
+        print(f"Processing {total_chunks} chunks of size {chunk_size}x{chunk_size}")
+        print(f"Using {num_devices} devices")
+
+        # Create chunk coordinates
+        chunk_coords = []
+        for cy in range(chunks_y):
+            for cx in range(chunks_x):
+                start_y = cy * chunk_size
+                end_y = min(start_y + chunk_size, height)
+                start_x = cx * chunk_size
+                end_x = min(start_x + chunk_size, width)
+                chunk_coords.append((start_y, end_y, start_x, end_x))
+
+        # Pad chunk coordinates
+        remainder = len(chunk_coords) % num_devices
+        if remainder != 0:
+            padding_needed = num_devices - remainder
+            chunk_coords.extend([(-1, -1, -1, -1)] * padding_needed)
+
+        # Reshape for pmap
+        chunks_per_device = len(chunk_coords) // num_devices
+        chunk_batches = []
+
+        for device_idx in range(num_devices):
+            start_idx = device_idx * chunks_per_device
+            end_idx = start_idx + chunks_per_device
+            device_chunks = chunk_coords[start_idx:end_idx]
+            chunk_batches.append(device_chunks)
+
+        chunk_batches = jnp.array(chunk_batches)
+
+        @jax.pmap
+        def process_chunk_batch(device_chunk_batch):
+            """Process a batch of chunks on one device."""
+            batch_results = []
+
+            for chunk_coords_array in device_chunk_batch:
+                start_y, end_y, start_x, end_x = chunk_coords_array
+
+                # Skip dummy chunks
+                if start_y < 0:
+                    # Return empty chunk
+                    batch_results.append(jnp.zeros((chunk_size, chunk_size, 3)))
+                    continue
+
+                # Process this chunk
+                chunk_height = int(end_y - start_y)
+                chunk_width = int(end_x - start_x)
+                chunk_image = jnp.zeros((chunk_height, chunk_width, 3))
+
+                for local_y in range(chunk_height):
+                    for local_x in range(chunk_width):
+                        global_y = int(start_y + local_y)
+                        global_x = int(start_x + local_x)
+
+                        try:
+                            ray_pos, ray_dir = self.generate_pixel_ray(
+                                camera_state, global_x, global_y
+                            )
+                            positions, directions, affine_params = (
+                                self.ray_integrator.integrate_ray(
+                                    ray_pos,
+                                    ray_dir,
+                                    max_affine_parameter=self.params.far_clip,
+                                )
+                            )
+                            pixel_color = scene_function(
+                                positions, directions, affine_params
+                            )
+                        except Exception:
+                            pixel_color = background_function(ray_pos, ray_dir)
+
+                        chunk_image = chunk_image.at[local_y, local_x].set(pixel_color)
+
+                # Pad chunk to standard size for consistent array shapes
+                padded_chunk = jnp.zeros((chunk_size, chunk_size, 3))
+                padded_chunk = padded_chunk.at[:chunk_height, :chunk_width].set(
+                    chunk_image
+                )
+                batch_results.append(padded_chunk)
+
+            return jnp.array(batch_results)
+
+        # Process all chunks in parallel
+        all_chunk_results = process_chunk_batch(chunk_batches)
+
+        # Reconstruct full image
+        image = jnp.zeros((height, width, 3))
+
+        # Flatten results and place back into image
+        flat_results = all_chunk_results.reshape(-1, chunk_size, chunk_size, 3)
+        original_chunks = chunk_coords[:total_chunks]
+
+        for i, (start_y, end_y, start_x, end_x) in enumerate(original_chunks):
+            if start_y >= 0:  # Skip dummy chunks
+                chunk_height = int(end_y - start_y)
+                chunk_width = int(end_x - start_x)
+                chunk_data = flat_results[i][:chunk_height, :chunk_width]
+
+                image = image.at[start_y:end_y, start_x:end_x].set(chunk_data)
 
         return image
 
