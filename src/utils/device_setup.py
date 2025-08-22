@@ -11,7 +11,6 @@ def setup_device():
         f"inter_op_parallelism_threads={n_cores} "
         f"--xla_cpu_multi_thread_eigen=true "
         f"--xla_cpu_allocator=platform "
-        f"--xla_hlo_profile",
         "JAX_ENABLE_X64": "1",
         "OMP_NUM_THREADS": str(n_cores),
         "MKL_NUM_THREADS": str(n_cores),

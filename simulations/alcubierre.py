@@ -161,31 +161,51 @@ class AlcubierreSimulation:
             Determine color based on where ray ends up.
             If ray reaches the starfield plane, show stars.
             """
-            if len(positions) == 0:
-                return jnp.array([0.0, 0.0, 0.0])  # Black space
+            # Handle empty positions array
+            positions_empty = positions.shape[0] == 0
 
-            # Check if ray reached the starfield plane
-            final_position = positions[-1]
-            final_x = final_position[1]
+            # Default black color
+            default_color = jnp.array([0.0, 0.0, 0.0], dtype=jnp.float32)
 
-            # If ray reached approximately the starfield position
-            if final_x <= self.starfield_x + 1.0:  # Small tolerance
-                # Use final spatial position to generate stars
-                y, z = final_position[2], final_position[3]
+            def compute_color(_):
+                final_position = positions[-1]
+                final_x = final_position[1]
 
-                # Create pseudo-random star pattern
-                star_seed = jnp.abs(jnp.sin(y * 12.9898 + z * 78.233) * 43758.5453)
-                star_seed = star_seed - jnp.floor(star_seed)  # Get fractional part
+                # Branch: reached starfield or not
+                def reached_starfield(_):
+                    y, z = final_position[2], final_position[3]
 
-                if star_seed < star_density:
-                    # Star brightness varies
-                    brightness = 0.5 + 0.5 * star_seed / star_density
-                    return jnp.array([brightness, brightness, brightness])
-                else:
-                    return jnp.array([0.05, 0.05, 0.1])  # Dark blue space
-            else:
-                # Ray didn't reach starfield - empty space
-                return jnp.array([0.0, 0.0, 0.0])
+                    # Pseudo-random star pattern
+                    star_seed = jnp.abs(jnp.sin(y * 12.9898 + z * 78.233) * 43758.5453)
+                    star_seed = star_seed - jnp.floor(star_seed)  # fractional part
+
+                    # Branch: star exists or dark blue space
+                    def star(_):
+                        brightness = 0.5 + 0.5 * star_seed / star_density
+                        return jnp.array(
+                            [brightness, brightness, brightness], dtype=jnp.float32
+                        )
+
+                    def no_star(_):
+                        return jnp.array([0.05, 0.05, 0.1], dtype=jnp.float32)
+
+                    return jax.lax.cond(
+                        star_seed < star_density, star, no_star, operand=None
+                    )
+
+                def empty_space(_):
+                    return jnp.array([0.0, 0.0, 0.0], dtype=jnp.float32)
+
+                return jax.lax.cond(
+                    final_x <= self.starfield_x + 1.0,
+                    reached_starfield,
+                    empty_space,
+                    operand=None,
+                )
+
+            return jax.lax.cond(
+                positions_empty, lambda _: default_color, compute_color, operand=None
+            )
 
         return starfield_scene_function
 
@@ -271,7 +291,7 @@ class AlcubierreSimulation:
         # Render Alcubierre view
         print("  Rendering Alcubierre spacetime...")
         alcubierre_image = self.alcubierre_camera.render_image_vectorized(
-            camera_state, starfield_scene, batch_size=500
+            camera_state, starfield_scene, batch_size=500, use_pmap=True
         )
 
         # For Minkowski comparison, use same camera but different spacetime

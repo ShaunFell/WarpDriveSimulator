@@ -164,7 +164,9 @@ class SpacetimeCamera:
         Uses pmap for parallel processing across devices/cores.
         """
         if background_function is None:
-            background_function = lambda ray_pos, ray_dir: jnp.array([0.0, 0.0, 0.0])
+            background_function = lambda ray_pos, ray_dir: jnp.array(
+                [0.0, 0.0, 0.0], dtype=jnp.float32
+            )
 
         # Initialize image
         image = jnp.zeros((self.params.height, self.params.width, 3))
@@ -216,9 +218,10 @@ class SpacetimeCamera:
 
             # Generate rays for this batch
             batch_colors = []
+            batch_counter = 0
             for x, y in batch_coords:
                 ray_pos, ray_dir = self.generate_pixel_ray(camera_state, x, y)
-
+                print(f"  Executing batch {batch_counter} / {len(batch_coords)}")
                 try:
                     positions, directions, affine_params = (
                         self.ray_integrator.integrate_ray(
@@ -230,6 +233,7 @@ class SpacetimeCamera:
                     pixel_color = background_function(ray_pos, ray_dir)
 
                 batch_colors.append(pixel_color)
+                batch_counter += 1
 
             # Update image with batch results
             for i, (x, y) in enumerate(batch_coords):
@@ -273,6 +277,7 @@ class SpacetimeCamera:
             pixel_batches.append(device_pixels)
 
         pixel_batches = jnp.array(pixel_batches)
+        jax.debug.print("here")
 
         # Define the parallel batch processing function
         @jax.pmap
@@ -285,12 +290,12 @@ class SpacetimeCamera:
 
                 # Branch: dummy pixels vs. real pixels
                 def dummy_branch(_):
-                    return jnp.array([0.0, 0.0, 0.0])
+                    return jnp.array([0.0, 0.0, 0.0], dtype=jnp.float32)
 
                 def real_branch(_):
                     ray_pos, ray_dir = self.generate_pixel_ray(camera_state, x, y)
 
-                    positions, directions, affine_params = (
+                    positions, directions, affine_params, mask = (
                         self.ray_integrator.integrate_ray(
                             ray_pos, ray_dir, max_affine_parameter=self.params.far_clip
                         )

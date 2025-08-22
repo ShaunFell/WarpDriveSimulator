@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import Tuple
 from dataclasses import dataclass
-
+from functools import partial
 from .metricvariables import Lapse, Shift, SpatialMetric
 
 import jax
@@ -201,6 +201,180 @@ class Metric(ABC):
 
 
 class Christoffel:
+    """Class for computing Christoffel symbols with JAX JIT-compatible memoization"""
+
+    def __init__(self, metric: Metric):
+        self.metric = metric
+        # Pre-allocate cache arrays that JAX can handle
+        self.cache_size = 100  # Adjust based on memory constraints
+
+        # Cache storage as JAX arrays (not Python dicts)
+        self._cache_coords = jnp.full(
+            (self.cache_size, 4), jnp.nan
+        )  # [t, x, y, z] coordinates
+        self._cache_derivatives = {
+            "dt": jnp.full((self.cache_size, 4, 4), jnp.nan),
+            "dx": jnp.full((self.cache_size, 4, 4), jnp.nan),
+            "dy": jnp.full((self.cache_size, 4, 4), jnp.nan),
+            "dz": jnp.full((self.cache_size, 4, 4), jnp.nan),
+        }
+        self._cache_valid = jnp.zeros(
+            self.cache_size, dtype=bool
+        )  # Which cache entries are valid
+        self._cache_index = 0  # Current cache insertion index
+
+    @partial(jax.jit, static_argnums=0)
+    def compute_symbol(
+        self,
+        indices: tuple,
+        t: jnp.ndarray,
+        x: jnp.ndarray,
+        y: jnp.ndarray,
+        z: jnp.ndarray,
+    ) -> jnp.ndarray:
+        """Compute Christoffel symbol Γ^μ_νρ at given coordinates with JAX-compatible caching
+
+        Args:
+            indices: List of 3 integers [μ, ν, ρ] specifying the component
+            t, x, y, z: Spacetime coordinates where to evaluate
+
+        Returns:
+            Christoffel symbol Γ^μ_νρ at the given coordinates
+        """
+        mu, nu, rho = indices
+
+        # Input validation
+        mu = jnp.asarray(mu, dtype=int)
+        nu = jnp.asarray(nu, dtype=int)
+        rho = jnp.asarray(rho, dtype=int)
+
+        # Convert scalars to arrays for consistent handling
+        t_arr = jnp.atleast_1d(t)
+        x_arr = jnp.atleast_1d(x)
+        y_arr = jnp.atleast_1d(y)
+        z_arr = jnp.atleast_1d(z)
+
+        # For simplicity in JIT, work with first element if arrays
+        # (full vectorization would require more complex caching)
+        t_val = t_arr[0]
+        x_val = x_arr[0]
+        y_val = y_arr[0]
+        z_val = z_arr[0]
+
+        # Look for cached derivatives
+        current_coords = jnp.array([t_val, x_val, y_val, z_val])
+
+        # Check cache for matching coordinates (within tolerance)
+        tolerance = 1e-12
+        coord_diffs = jnp.linalg.norm(
+            self._cache_coords - current_coords[None, :], axis=1
+        )
+        cache_matches = (coord_diffs < tolerance) & self._cache_valid
+        cache_hit_idx = jnp.argmax(cache_matches)  # First matching index
+        cache_hit = jnp.any(cache_matches)
+
+        # Define function to compute derivatives (expensive operation)
+        def compute_derivatives():
+            dg_dt = self.metric.dmetric4_dt(t_arr, x_arr, y_arr, z_arr)[
+                0
+            ]  # Take first element
+            dg_dx = self.metric.dmetric4_dx(t_arr, x_arr, y_arr, z_arr)[0]
+            dg_dy = self.metric.dmetric4_dy(t_arr, x_arr, y_arr, z_arr)[0]
+            dg_dz = self.metric.dmetric4_dz(t_arr, x_arr, y_arr, z_arr)[0]
+            return dg_dt, dg_dx, dg_dy, dg_dz
+
+        # Define function to get cached derivatives
+        def get_cached_derivatives():
+            return (
+                self._cache_derivatives["dt"][cache_hit_idx],
+                self._cache_derivatives["dx"][cache_hit_idx],
+                self._cache_derivatives["dy"][cache_hit_idx],
+                self._cache_derivatives["dz"][cache_hit_idx],
+            )
+
+        # Use JAX conditional to choose between cached and computed derivatives
+        dg_dt, dg_dx, dg_dy, dg_dz = jax.lax.cond(
+            cache_hit,
+            lambda _: get_cached_derivatives(),
+            lambda _: compute_derivatives(),
+            operand=None,
+        )
+
+        # Update cache with new computation (only if not a cache hit)
+        def update_cache():
+            # Find insertion index (circular buffer)
+            insert_idx = self._cache_index % self.cache_size
+
+            # Update cache arrays
+            new_cache_coords = self._cache_coords.at[insert_idx].set(current_coords)
+            new_cache_dt = self._cache_derivatives["dt"].at[insert_idx].set(dg_dt)
+            new_cache_dx = self._cache_derivatives["dx"].at[insert_idx].set(dg_dx)
+            new_cache_dy = self._cache_derivatives["dy"].at[insert_idx].set(dg_dy)
+            new_cache_dz = self._cache_derivatives["dz"].at[insert_idx].set(dg_dz)
+            new_cache_valid = self._cache_valid.at[insert_idx].set(True)
+
+            # Update instance variables (this works in JAX JIT)
+            self._cache_coords = new_cache_coords
+            self._cache_derivatives["dt"] = new_cache_dt
+            self._cache_derivatives["dx"] = new_cache_dx
+            self._cache_derivatives["dy"] = new_cache_dy
+            self._cache_derivatives["dz"] = new_cache_dz
+            self._cache_valid = new_cache_valid
+            self._cache_index = insert_idx + 1
+
+            return None
+
+        def no_update():
+            return None
+
+        # Update cache only if we computed new derivatives
+        jax.lax.cond(
+            ~cache_hit, lambda _: update_cache(), lambda _: no_update(), operand=None
+        )
+
+        # Get the metric and its inverse at the point
+        g = self.metric(t_arr, x_arr, y_arr, z_arr)[0]  # Take first element
+        g_inv = jnp.linalg.inv(g)
+
+        # Stack derivatives for easy indexing: [dt, dx, dy, dz]
+        dg = jnp.array([dg_dt, dg_dx, dg_dy, dg_dz])
+
+        # Christoffel symbol formula: Γ^μ_νρ = (1/2) g^μσ (∂g_σν/∂x^ρ + ∂g_σρ/∂x^ν - ∂g_νρ/∂x^σ)
+        christoffel = 0.0
+        for sigma in range(4):
+            term1 = dg[rho, sigma, nu]  # ∂g_σν/∂x^ρ
+            term2 = dg[nu, sigma, rho]  # ∂g_σρ/∂x^ν
+            term3 = dg[sigma, nu, rho]  # ∂g_νρ/∂x^σ
+
+            christoffel += 0.5 * g_inv[mu, sigma] * (term1 + term2 - term3)
+
+        # Return scalar result that matches input type
+        return jnp.where(jnp.isscalar(t), christoffel, jnp.array([christoffel]))[()]
+
+    def clear_cache(self):
+        """Clear the cache (call outside of JIT)"""
+        self._cache_coords = jnp.full((self.cache_size, 4), jnp.nan)
+        self._cache_derivatives = {
+            "dt": jnp.full((self.cache_size, 4, 4), jnp.nan),
+            "dx": jnp.full((self.cache_size, 4, 4), jnp.nan),
+            "dy": jnp.full((self.cache_size, 4, 4), jnp.nan),
+            "dz": jnp.full((self.cache_size, 4, 4), jnp.nan),
+        }
+        self._cache_valid = jnp.zeros(self.cache_size, dtype=bool)
+        self._cache_index = 0
+
+    def __call__(
+        self,
+        indices: tuple,
+        t: jnp.ndarray,
+        x: jnp.ndarray,
+        y: jnp.ndarray,
+        z: jnp.ndarray,
+    ):
+        return self.compute_symbol(indices, t, x, y, z)
+
+
+class OLDChristoffel:
     """Class for computing Christoffel symbols"""
 
     def __init__(self, metric: Metric):

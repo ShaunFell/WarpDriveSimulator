@@ -3,7 +3,7 @@ import jax.numpy as jnp
 from typing import Tuple, Optional, Callable
 from dataclasses import dataclass
 import time
-
+from functools import partial
 from src.abstract.spacetime import Spacetime
 
 
@@ -54,6 +54,7 @@ class LightRayIntegrator:
         self._rk4_step = self._rk4_step_impl  # jax.jit(self._rk4_step_impl)
         self._compute_acceleration = jax.jit(self._compute_acceleration_impl)
 
+    @partial(jax.jit, static_argnums=(0, 3))
     def integrate_ray(
         self,
         initial_position: jnp.ndarray,
@@ -61,81 +62,89 @@ class LightRayIntegrator:
         max_affine_parameter: float = 100.0,
         termination_condition: Optional[Callable] = None,
     ) -> Tuple[jnp.ndarray, jnp.ndarray, jnp.ndarray]:
-        """
-        Integrate a light ray through spacetime.
-
-        Args:
-            initial_position: Starting 4-position [t, x, y, z]
-            initial_direction: Starting 4-direction [dt/dλ, dx/dλ, dy/dλ, dz/dλ]
-            max_affine_parameter: Maximum affine parameter to integrate to
-            termination_condition: Optional function to stop integration early
-
-        Returns:
-            Tuple of (positions, directions, affine_parameters) arrays
-            - positions: shape (N, 4) array of positions along the ray
-            - directions: shape (N, 4) array of directions along the ray
-            - affine_parameters: shape (N,) array of affine parameter values
-        """
-        # Normalize initial direction to satisfy null condition
         normalized_direction = self._normalize_null_vector(
             initial_position, initial_direction
         )
 
-        # Initialize arrays to store the trajectory
-        max_steps = int(max_affine_parameter / self.config.step_size) + 1
+        max_steps = int(max_affine_parameter / self.config.step_size + 1)
+
         positions = jnp.zeros((max_steps, 4))
         directions = jnp.zeros((max_steps, 4))
-        affine_params = jnp.zeros(max_steps)
+        affine_params = jnp.zeros((max_steps,))
 
-        # Set initial conditions
         positions = positions.at[0].set(initial_position)
         directions = directions.at[0].set(normalized_direction)
         affine_params = affine_params.at[0].set(0.0)
 
-        # Integration loop
-        current_pos = initial_position
-        current_dir = normalized_direction
-        current_lambda = 0.0
-        step = 0
+        init_state = {
+            "step": jnp.array(0, dtype=jnp.int32),
+            "pos": initial_position,
+            "dir": normalized_direction,
+            "lam": jnp.array(0.0, dtype=jnp.float32),
+            "step_size": self.config.step_size,
+            "positions": positions,
+            "directions": directions,
+            "affine": affine_params,
+        }
 
-        if self.config.adaptive_stepping:
-            step_size = self.config.step_size
-        else:
-            step_size = self.config.step_size
+        def cond_fn(state):
+            not_done = state["step"] < max_steps - 1
+            not_exceeded = state["lam"] < max_affine_parameter
+            return jnp.logical_and(not_done, not_exceeded)
 
-        while step < max_steps - 1 and current_lambda < max_affine_parameter:
-            # Check termination condition
-            if termination_condition is not None:
-                if termination_condition(current_pos, current_dir, current_lambda):
-                    break
+        def body_fn(state):
+            pos, dir, lam, step_size = (
+                state["pos"],
+                state["dir"],
+                state["lam"],
+                state["step_size"],
+            )
 
-            # Take integration step
-            if self.config.adaptive_stepping:
-                new_pos, new_dir, actual_step = self._adaptive_step(
-                    current_pos, current_dir, step_size
+            # step
+            def adaptive(_):
+                new_pos, new_dir, new_step_size = self._adaptive_step(
+                    pos, dir, step_size
                 )
-                step_size = actual_step
-            else:
-                new_pos, new_dir = self._rk4_step(current_pos, current_dir, step_size)
+                return new_pos, new_dir, new_step_size
 
-            step += 1
-            current_lambda += step_size
+            def fixed(_):
+                new_pos, new_dir = self._rk4_step(pos, dir, step_size)
+                return new_pos, new_dir, step_size
 
-            # Store results
-            positions = positions.at[step].set(new_pos)
-            directions = directions.at[step].set(new_dir)
-            affine_params = affine_params.at[step].set(current_lambda)
+            new_pos, new_dir, new_step_size = jax.lax.cond(
+                self.config.adaptive_stepping,
+                adaptive,
+                fixed,
+                operand=None,
+            )
 
-            # Update for next iteration
-            current_pos = new_pos
-            current_dir = new_dir
+            new_step = state["step"] + 1
+            new_lam = lam + new_step_size
 
-        # Trim arrays to actual length
-        actual_length = step + 1
+            positions = state["positions"].at[new_step].set(new_pos)
+            directions = state["directions"].at[new_step].set(new_dir)
+            affine = state["affine"].at[new_step].set(new_lam)
+
+            return {
+                "step": new_step,
+                "pos": new_pos,
+                "dir": new_dir,
+                "lam": new_lam,
+                "step_size": new_step_size,
+                "positions": positions,
+                "directions": directions,
+                "affine": affine,
+            }
+
+        final_state = jax.lax.while_loop(cond_fn, body_fn, init_state)
+
+        # Optional mask of valid entries
+        mask = jnp.arange(max_steps) <= final_state["step"]
         return (
-            positions[:actual_length],
-            directions[:actual_length],
-            affine_params[:actual_length],
+            final_state["positions"],
+            final_state["directions"],
+            final_state["affine"],
+            mask,
         )
 
     def _rk4_step_impl(
@@ -153,42 +162,28 @@ class LightRayIntegrator:
             Tuple of (new_position, new_direction)
         """
 
-        print("step")
         # RK4 coefficients for position (dx/dλ = v)
-        start1 = time.time()
         k1_pos = direction
         k1_dir = self._compute_acceleration_impl(position, direction)
 
-        end1 = time.time()
         k2_pos = direction + 0.5 * step_size * k1_dir
         k2_dir = self._compute_acceleration_impl(
             position + 0.5 * step_size * k1_pos, direction + 0.5 * step_size * k1_dir
         )
-        end2 = time.time()
         k3_pos = direction + 0.5 * step_size * k2_dir
         k3_dir = self._compute_acceleration_impl(
             position + 0.5 * step_size * k2_pos, direction + 0.5 * step_size * k2_dir
         )
-        end3 = time.time()
         k4_pos = direction + step_size * k3_dir
         k4_dir = self._compute_acceleration_impl(
             position + step_size * k3_pos, direction + step_size * k3_dir
         )
-        end4 = time.time()
         # Combine RK4 terms
         new_position = position + (step_size / 6.0) * (
             k1_pos + 2 * k2_pos + 2 * k3_pos + k4_pos
         )
         new_direction = direction + (step_size / 6.0) * (
             k1_dir + 2 * k2_dir + 2 * k3_dir + k4_dir
-        )
-        end5 = time.time()
-        print(
-            f"k1 {end1 - start1}\n"
-            f"k2 {end2 - end1}\n"
-            f"k3 {end3 - end2}\n"
-            f"k4 {end4 - end3}\n"
-            f"new {end5 - end4}\n"
         )
 
         return new_position, new_direction
@@ -223,7 +218,6 @@ class LightRayIntegrator:
             # Sum over Christoffel symbols: -Γ^μ_νρ v^ν v^ρ
             for nu in range(4):
                 for rho in range(4):
-                    print("compute")
                     gamma = self.spacetime.christoffel(
                         (mu, nu, rho), t_arr, x_arr, y_arr, z_arr
                     )
@@ -259,23 +253,33 @@ class LightRayIntegrator:
         dir_error = jnp.linalg.norm(dir2 - dir1)
         total_error = pos_error + dir_error
 
-        # Adjust step size based on error
-        if total_error > self.config.tolerance:
-            # Error too large, reduce step size
-            new_step_size = jnp.maximum(
-                current_step_size * 0.5, self.config.min_step_size
-            )
-            # Use the more accurate two-step result
-            return pos2, dir2, new_step_size
-        elif total_error < self.config.tolerance / 10:
-            # Error very small, can increase step size
-            new_step_size = jnp.minimum(
-                current_step_size * 1.5, self.config.max_step_size
-            )
-            return pos1, dir1, new_step_size
-        else:
-            # Error acceptable, keep current step size
+        # branch 1: error too large
+        def too_large(_):
+            new_step = jnp.maximum(current_step_size * 0.5, self.config.min_step_size)
+            return pos2, dir2, new_step
+
+        # branch 2: error very small
+        def too_small(_):
+            new_step = jnp.minimum(current_step_size * 1.5, self.config.max_step_size)
+            return pos1, dir1, new_step
+
+        # branch 3: acceptable
+        def acceptable(_):
             return pos1, dir1, current_step_size
+
+        # Adjust step size based on error
+        # First conditional: is error > tol?
+        return jax.lax.cond(
+            total_error > self.config.tolerance,
+            too_large,
+            lambda _: jax.lax.cond(
+                total_error < self.config.tolerance / 10,
+                too_small,
+                acceptable,
+                operand=None,
+            ),
+            operand=None,
+        )
 
     def _normalize_null_vector(
         self, position: jnp.ndarray, direction: jnp.ndarray
