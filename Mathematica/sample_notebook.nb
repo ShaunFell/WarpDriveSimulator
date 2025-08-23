@@ -1,0 +1,964 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 14.2' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[     38725,        956]
+NotebookOptionsPosition[     38374,        942]
+NotebookOutlinePosition[     38765,        958]
+CellTagsIndexPosition[     38722,        955]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+     "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+     "===", 
+    RowBox[{
+    "WARP", " ", "DRIVE", " ", "SPACETIME", " ", "ANALYSIS", " ", "WITH", " ",
+      "OGRe", " ", "Mathematica", " ", "Notebook", " ", "for", " ", 
+     "Alcubierre", " ", "Warp", " ", "Drive", " ", "Studies"}], "===", "===", 
+    "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+     "===", "===", "===", "===", "===", "===", "===", "===", "===", "==="}], 
+   "*)"}], 
+  RowBox[{"(*", 
+   RowBox[{"Download", " ", "and", " ", "Load", " ", "OGRe"}], "*)"}], 
+  RowBox[{
+   RowBox[{
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", "depPath", "}"}], ",", 
+      RowBox[{
+       RowBox[{"depPath", "=", 
+        RowBox[{"FileNameJoin", "[", 
+         RowBox[{"{", 
+          RowBox[{
+          "$UserBaseDirectory", ",", "\"\<Applications\>\"", 
+           ",", "\"\<OGRe.m\>\""}], "}"}], "]"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{"!", 
+          RowBox[{"FileExistsQ", "[", "depPath", "]"}]}], ",", 
+         RowBox[{
+          RowBox[{"Print", "[", "\"\<Downloading OGRe...\>\"", "]"}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{"URLDownload", "[", 
+           
+           RowBox[{"\"\<https://raw.githubusercontent.com/bshoshany/OGRe/\
+master/OGRe.m\>\"", ",", "depPath"}], "]"}], ";", "\[IndentingNewLine]", 
+          RowBox[{"Print", "[", "\"\<OGRe downloaded successfully\>\"", "]"}],
+           ";"}]}], "]"}], ";", "\[IndentingNewLine]", 
+       RowBox[{"(*", 
+        RowBox[{"Load", " ", "OGRe"}], "*)"}], 
+       RowBox[{"Needs", "[", 
+        RowBox[{"\"\<OGRe`\>\"", ",", "depPath"}], "]"}], ";"}]}], "]"}], 
+    ";"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+    "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+      "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+      "===", 
+     RowBox[{"UTILITY", " ", "FUNCTIONS"}], "===", "===", "===", "===", "===",
+      "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+      "===", "===", "===", "===", "===", "===", "==="}], "*)"}], 
+   "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{
+    "Alcubierre", " ", "warp", " ", "function", " ", "with", " ", "smooth", " ",
+      "cutoff"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"WarpFunction", "[", 
+     RowBox[{"r_", ",", "R_", ",", 
+      RowBox[{"\[Sigma]_", ":", "0.5"}]}], "]"}], ":=", 
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"Tanh", "[", 
+        RowBox[{"\[Sigma]", " ", 
+         RowBox[{"(", 
+          RowBox[{"r", "+", "R"}], ")"}]}], "]"}], "-", 
+       RowBox[{"Tanh", "[", 
+        RowBox[{"\[Sigma]", " ", 
+         RowBox[{"(", 
+          RowBox[{"r", "-", "R"}], ")"}]}], "]"}]}], ")"}], "/", 
+     RowBox[{"(", 
+      RowBox[{"2", " ", 
+       RowBox[{"Tanh", "[", 
+        RowBox[{"\[Sigma]", " ", "R"}], "]"}]}], ")"}]}]}], 
+   "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{
+    "Helper", " ", "function", " ", "to", " ", "create", " ", "and", " ", 
+     "analyze", " ", "a", " ", "spacetime"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"CreateSpacetimeAnalysis", "[", 
+     RowBox[{
+     "name_String", ",", "coords_List", ",", "metricComponents_List"}], "]"}],
+     ":=", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"coordsID", ",", "metricID"}], "}"}], ",", 
+      RowBox[{
+       RowBox[{"coordsID", "=", 
+        RowBox[{"name", "<>", "\"\<Coords\>\""}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"metricID", "=", 
+        RowBox[{"name", "<>", "\"\<Metric\>\""}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"(*", 
+        RowBox[{
+        "Create", " ", "coordinate", " ", "system", " ", "and", " ", "metric",
+          " ", "using", " ", "OGRe"}], "*)"}], 
+       RowBox[{"TNewCoordinates", "[", 
+        RowBox[{"coordsID", ",", "coords"}], "]"}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"TNewMetric", "[", 
+        RowBox[{
+        "metricID", ",", "coordsID", ",", "metricComponents", 
+         ",", "\"\<g\>\""}], "]"}], ";", "\[IndentingNewLine]", 
+       RowBox[{"(*", 
+        RowBox[{
+        "Return", " ", "IDs", " ", "for", " ", "further", " ", "analysis"}], 
+        "*)"}], 
+       RowBox[{"<|", 
+        RowBox[{
+         RowBox[{"\"\<Coordinates\>\"", "->", "coordsID"}], ",", 
+         RowBox[{"\"\<Metric\>\"", "->", "metricID"}], ",", 
+         RowBox[{"\"\<Name\>\"", "->", "name"}]}], "|>"}]}]}], "]"}]}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+    "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+      "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+      "===", 
+     RowBox[{"MINKOWSKI", " ", "SPACETIME"}], "===", "===", "===", "===", "===",
+      "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+      "===", "===", "===", "===", "===", "===", "==="}], "*)"}], "\n", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Print", "[", "\"\<Creating Minkowski Spacetime...\>\"", "]"}], 
+    ";"}], "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{"Define", " ", "coordinates"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"minkowskiCoords", "=", 
+     RowBox[{"{", 
+      RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "}"}]}], ";"}], 
+   "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{"Minkowski", " ", "metric", " ", "in", " ", 
+     RowBox[{"(", 
+      RowBox[{"-", 
+       RowBox[{",", 
+        RowBox[{"+", 
+         RowBox[{",", 
+          RowBox[{"+", 
+           RowBox[{",", "+"}]}]}]}]}]}], ")"}], " ", "signature"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"minkowskiMetric", "=", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"-", "1"}], ",", "0", ",", "0", ",", "0"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "1", ",", "0", ",", "0"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0", ",", "1", ",", "0"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0", ",", "0", ",", "1"}], "}"}]}], "}"}]}], ";"}], 
+   "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{"Create", " ", "Minkowski", " ", "spacetime"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"minkowski", "=", 
+     RowBox[{"CreateSpacetimeAnalysis", "[", 
+      RowBox[{"\"\<Minkowski\>\"", ",", "minkowskiCoords", ",", 
+       "minkowskiMetric"}], "]"}]}], ";"}], "\n", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Print", "[", 
+     RowBox[{"\"\<Minkowski spacetime created with metric ID: \>\"", ",", 
+      RowBox[{"minkowski", "[", "\"\<Metric\>\"", "]"}]}], "]"}], ";"}], 
+   "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{"Display", " ", "Minkowski", " ", "metric"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Print", "[", "\"\<Minkowski Metric Components:\>\"", "]"}], 
+    ";"}], "\n", 
+   RowBox[{
+    RowBox[{"TShow", "[", 
+     RowBox[{"minkowski", "[", "\"\<Metric\>\"", "]"}], "]"}], ";"}], 
+   "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{"Show", " ", "line", " ", "element"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Print", "[", "\"\<Minkowski Line Element:\>\"", "]"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"TLineElement", "[", 
+     RowBox[{"minkowski", "[", "\"\<Metric\>\"", "]"}], "]"}], ";"}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+    "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+      "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+      "===", 
+     RowBox[{"ALCUBIERRE", " ", "WARP", " ", "DRIVE", " ", "SPACETIME"}], "===",
+      "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+      "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", 
+     "==="}], "*)"}], "\n", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+    "Print", "[", "\"\<Creating Alcubierre Warp Drive Spacetime...\>\"", 
+     "]"}], ";"}], "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", "Parameters", "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"vs", "=", 
+     RowBox[{"4", "/", "5"}]}], ";"}], "  ", 
+   RowBox[{"(*", 
+    RowBox[{"Warp", " ", "velocity", " ", 
+     RowBox[{"(", 
+      RowBox[{"0.8", "c"}], ")"}]}], "*)"}], "\n", 
+   RowBox[{
+    RowBox[{"R", "=", "10"}], ";"}], "    ", 
+   RowBox[{"(*", 
+    RowBox[{"Bubble", " ", "radius"}], "*)"}], "\n", 
+   RowBox[{
+    RowBox[{"\[Sigma]", "=", 
+     RowBox[{"1", "/", "2"}]}], ";"}], "   ", 
+   RowBox[{"(*", 
+    RowBox[{"Thickness", " ", "parameter"}], "*)"}], "\[IndentingNewLine]", 
+   "\n", 
+   RowBox[{"(*", 
+    RowBox[{"Define", " ", "coordinates"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"alcubierreCoords", "=", 
+     RowBox[{"{", 
+      RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "}"}]}], ";"}], 
+   "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{"Bubble", " ", "center", " ", "trajectory"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"xs", "=", 
+     RowBox[{"vs", "*", "t"}]}], ";"}], "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{"Distance", " ", "from", " ", "bubble", " ", "center"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"rs", "=", 
+     RowBox[{"Sqrt", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"x", "-", "xs"}], ")"}], "^", "2"}], "+", 
+       RowBox[{"y", "^", "2"}], "+", 
+       RowBox[{"z", "^", "2"}]}], "]"}]}], ";"}], "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{"Warp", " ", "function"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"f", "=", 
+     RowBox[{"WarpFunction", "[", 
+      RowBox[{"rs", ",", "R", ",", "\[Sigma]"}], "]"}]}], ";"}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{"Alcubierre", " ", "metric", " ", "components"}], "*)"}], "\n", 
+   RowBox[{"(*", 
+    RowBox[{"ds\.b2", "=", 
+     RowBox[{
+      RowBox[{"-", "dt\.b2"}], "+", 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{"dx", "-", 
+         RowBox[{"vs", "*", "f", 
+          RowBox[{"(", "rs", ")"}], "*", "dt"}]}], ")"}], "\.b2"}], "+", 
+      "dy\.b2", "+", "dz\.b2"}]}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"alcubierreMetric", "=", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"-", "1"}], "+", 
+          RowBox[{
+           RowBox[{"vs", "^", "2"}], "*", 
+           RowBox[{"f", "^", "2"}]}]}], ",", 
+         RowBox[{
+          RowBox[{"-", "vs"}], "*", "f"}], ",", "0", ",", "0"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"-", "vs"}], "*", "f"}], ",", "1", ",", "0", ",", "0"}], 
+        "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0", ",", "1", ",", "0"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0", ",", "0", ",", "1"}], "}"}]}], "}"}]}], ";"}], 
+   "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{"Create", " ", "Alcubierre", " ", "spacetime"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"alcubierre", "=", 
+     RowBox[{"CreateSpacetimeAnalysis", "[", 
+      RowBox[{"\"\<Alcubierre\>\"", ",", "alcubierreCoords", ",", 
+       "alcubierreMetric"}], "]"}]}], ";"}], "\n", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Print", "[", 
+     RowBox[{"\"\<Alcubierre spacetime created with metric ID: \>\"", ",", 
+      RowBox[{"alcubierre", "[", "\"\<Metric\>\"", "]"}]}], "]"}], ";"}], 
+   "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{"Display", " ", "Alcubierre", " ", "metric", " ", "components"}], 
+    "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Print", "[", "\"\<Alcubierre Metric Components:\>\"", "]"}], 
+    ";"}], "\n", 
+   RowBox[{
+    RowBox[{"TList", "[", 
+     RowBox[{"alcubierre", "[", "\"\<Metric\>\"", "]"}], "]"}], ";"}], 
+   "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{"Show", " ", "line", " ", "element"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Print", "[", "\"\<Alcubierre Line Element:\>\"", "]"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"TLineElement", "[", 
+     RowBox[{"alcubierre", "[", "\"\<Metric\>\"", "]"}], "]"}], ";"}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+    "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+      "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+      "===", "VISUALIZATIONS", "===", "===", "===", "===", "===", "===", "===",
+      "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+      "===", "===", "===", "===", "==="}], "*)"}], "\n", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Print", "[", "\"\<Creating Visualizations...\>\"", "]"}], ";"}], 
+   "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{"Plot", " ", "the", " ", "warp", " ", "function"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"warpPlot", "=", 
+     RowBox[{"Plot", "[", 
+      RowBox[{
+       RowBox[{"WarpFunction", "[", 
+        RowBox[{"r", ",", "10", ",", "0.5"}], "]"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"r", ",", "0", ",", "25"}], "}"}], ",", 
+       RowBox[{"PlotLabel", "->", "\"\<Alcubierre Warp Function f(r)\>\""}], ",", 
+       RowBox[{"AxesLabel", "->", 
+        RowBox[{"{", 
+         RowBox[{"\"\<r\>\"", ",", "\"\<f(r)\>\""}], "}"}]}], ",", 
+       RowBox[{"GridLines", "->", "Automatic"}], ",", 
+       RowBox[{"PlotStyle", "->", "Thick"}], ",", 
+       RowBox[{"ImageSize", "->", "Medium"}]}], "]"}]}], ";"}], "\n", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Print", "[", "\"\<Warp Function Plot:\>\"", "]"}], ";"}], "\n", 
+   "warpPlot", "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{
+    "3", "D", " ", "visualization", " ", "of", " ", "warp", " ", "field"}], 
+    "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"warpField3D", "=", 
+     RowBox[{"Plot3D", "[", 
+      RowBox[{
+       RowBox[{"WarpFunction", "[", 
+        RowBox[{
+         RowBox[{"Sqrt", "[", 
+          RowBox[{
+           RowBox[{"x", "^", "2"}], "+", 
+           RowBox[{"y", "^", "2"}]}], "]"}], ",", "10", ",", "0.5"}], "]"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"x", ",", 
+         RowBox[{"-", "20"}], ",", "20"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"y", ",", 
+         RowBox[{"-", "20"}], ",", "20"}], "}"}], ",", 
+       RowBox[{"PlotRange", "->", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"-", "1"}], ",", "1"}], "}"}]}], ",", 
+       RowBox[{"PlotLabel", "->", "\"\<Alcubierre Warp Field f(r)\>\""}], ",", 
+       RowBox[{"AxesLabel", "->", 
+        RowBox[{"{", 
+         RowBox[{"\"\<x\>\"", ",", "\"\<y\>\"", ",", "\"\<f(r)\>\""}], 
+         "}"}]}], ",", 
+       RowBox[{"ColorFunction", "->", "\"\<RainbowOpacity\>\""}], ",", 
+       RowBox[{"ImageSize", "->", "Medium"}]}], "]"}]}], ";"}], "\n", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Print", "[", "\"\<3D Warp Field:\>\"", "]"}], ";"}], "\n", 
+   "warpField3D", "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{"Time", " ", "evolution", " ", "of", " ", "warp", " ", "bubble"}],
+     "*)"}], "\[IndentingNewLine]", 
+   RowBox[{"Manipulate", "[", 
+    RowBox[{
+     RowBox[{"Plot3D", "[", 
+      RowBox[{
+       RowBox[{"WarpFunction", "[", 
+        RowBox[{
+         RowBox[{"Sqrt", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"(", 
+             RowBox[{"x", "-", 
+              RowBox[{"vs", "*", "time"}]}], ")"}], "^", "2"}], "+", 
+           RowBox[{"y", "^", "2"}]}], "]"}], ",", "R", ",", "\[Sigma]"}], 
+        "]"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"x", ",", 
+         RowBox[{"-", "25"}], ",", "25"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"y", ",", 
+         RowBox[{"-", "15"}], ",", "15"}], "}"}], ",", 
+       RowBox[{"PlotRange", "->", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"-", "1"}], ",", "1"}], "}"}]}], ",", 
+       RowBox[{"PlotLabel", "->", 
+        RowBox[{"\"\<Alcubierre Warp Field at t = \>\"", "<>", 
+         RowBox[{"ToString", "[", 
+          RowBox[{"NumberForm", "[", 
+           RowBox[{"time", ",", "2"}], "]"}], "]"}]}]}], ",", 
+       RowBox[{"AxesLabel", "->", 
+        RowBox[{"{", 
+         RowBox[{"\"\<x\>\"", ",", "\"\<y\>\"", ",", "\"\<f(r)\>\""}], 
+         "}"}]}], ",", 
+       RowBox[{"ColorFunction", "->", "\"\<RainbowOpacity\>\""}], ",", 
+       RowBox[{"ImageSize", "->", "Medium"}]}], "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"time", ",", "0", ",", "20", ",", "0.5"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"vs", ",", "0.1", ",", "2", ",", "0.1"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"R", ",", "5", ",", "20", ",", "1"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\[Sigma]", ",", "0.1", ",", "2", ",", "0.1"}], "}"}]}], "]"}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+    "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+      "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+      "===", 
+     RowBox[{"CURVATURE", " ", "ANALYSIS"}], "===", "===", "===", "===", "===",
+      "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+      "===", "===", "===", "===", "===", "===", "==="}], "*)"}], "\n", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+    "Print", "[", "\"\<Computing Curvature Tensors for Alcubierre \
+Spacetime...\>\"", "]"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+    "Print", "[", "\"\<This may take some time due to the complexity of the \
+metric.\>\"", "]"}], ";"}], "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{"Compute", " ", "Christoffel", " ", "symbols"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Print", "[", "\"\<Computing Christoffel symbols...\>\"", "]"}], 
+    ";"}], "\n", 
+   RowBox[{
+    RowBox[{"christoffelID", "=", 
+     RowBox[{"TCalcChristoffel", "[", 
+      RowBox[{"alcubierre", "[", "\"\<Metric\>\"", "]"}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"Print", "[", 
+     RowBox[{"\"\<Christoffel symbols computed. ID: \>\"", ",", 
+      "christoffelID"}], "]"}], ";"}], "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{"Display", " ", "some", " ", "Christoffel", " ", "components"}], 
+    "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+    "Print", "[", "\"\<Sample Christoffel symbol components:\>\"", "]"}], 
+    ";"}], "\n", 
+   RowBox[{
+    RowBox[{"TList", "[", "christoffelID", "]"}], ";"}], 
+   "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{"Compute", " ", "Riemann", " ", "tensor"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Print", "[", "\"\<Computing Riemann tensor...\>\"", "]"}], ";"}],
+    "\n", 
+   RowBox[{
+    RowBox[{"riemannID", "=", 
+     RowBox[{"TCalcRiemannTensor", "[", 
+      RowBox[{"alcubierre", "[", "\"\<Metric\>\"", "]"}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"Print", "[", 
+     RowBox[{"\"\<Riemann tensor computed. ID: \>\"", ",", "riemannID"}], 
+     "]"}], ";"}], "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{"Compute", " ", "Ricci", " ", "tensor"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Print", "[", "\"\<Computing Ricci tensor...\>\"", "]"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"ricciTensorID", "=", 
+     RowBox[{"TCalcRicciTensor", "[", 
+      RowBox[{"alcubierre", "[", "\"\<Metric\>\"", "]"}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"Print", "[", 
+     RowBox[{"\"\<Ricci tensor computed. ID: \>\"", ",", "ricciTensorID"}], 
+     "]"}], ";"}], "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{"Compute", " ", "Ricci", " ", "scalar"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Print", "[", "\"\<Computing Ricci scalar...\>\"", "]"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"ricciScalarID", "=", 
+     RowBox[{"TCalcRicciScalar", "[", 
+      RowBox[{"alcubierre", "[", "\"\<Metric\>\"", "]"}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"Print", "[", 
+     RowBox[{"\"\<Ricci scalar computed. ID: \>\"", ",", "ricciScalarID"}], 
+     "]"}], ";"}], "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{"Display", " ", "Ricci", " ", "scalar"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Print", "[", "\"\<Ricci Scalar:\>\"", "]"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"TShow", "[", "ricciScalarID", "]"}], ";"}], 
+   "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{"Compute", " ", "Einstein", " ", "tensor"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Print", "[", "\"\<Computing Einstein tensor...\>\"", "]"}], 
+    ";"}], "\n", 
+   RowBox[{
+    RowBox[{"einsteinID", "=", 
+     RowBox[{"TCalcEinsteinTensor", "[", 
+      RowBox[{"alcubierre", "[", "\"\<Metric\>\"", "]"}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"Print", "[", 
+     RowBox[{"\"\<Einstein tensor computed. ID: \>\"", ",", "einsteinID"}], 
+     "]"}], ";"}], "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{"Display", " ", "Einstein", " ", "tensor", " ", "components"}], 
+    "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Print", "[", "\"\<Einstein Tensor Components:\>\"", "]"}], ";"}],
+    "\n", 
+   RowBox[{
+    RowBox[{"TList", "[", "einsteinID", "]"}], ";"}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+    "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+      "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+      "===", 
+     RowBox[{"STRESS", "-", 
+      RowBox[{"ENERGY", " ", "TENSOR", " ", "ANALYSIS"}]}], "===", "===", "===",
+      "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+      "===", "===", "===", "===", "===", "===", "===", "===", "==="}], "*)"}],
+    "\n", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+    "Print", "[", "\"\<Analyzing Required Stress-Energy Tensor...\>\"", "]"}],
+     ";"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"The", " ", "stress"}], "-", 
+      RowBox[{
+      "energy", " ", "tensor", " ", "is", " ", "related", " ", "to", " ", 
+       "Einstein", " ", "tensor", " ", "by", " ", "T_\[Mu]\[Nu]"}]}], "=", 
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"c\:2074", "/", "8"}], "\[Pi]G"}], ")"}], " ", 
+      "G_\[Mu]\[Nu]"}]}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"In", " ", "natural", " ", "units", " ", "where", " ", "c"}], "=", 
+      RowBox[{"G", "=", "1"}]}], ",", 
+     RowBox[{
+      RowBox[{"this", " ", "becomes", " ", "T_\[Mu]\[Nu]"}], "=", 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"1", "/", "8"}], "\[Pi]"}], ")"}], " ", "G_\[Mu]\[Nu]"}]}]}],
+     "*)"}], "\n", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+    "Print", "[", "\"\<Required stress-energy tensor T_\[Mu]\[Nu] = \
+(1/8\[Pi]) G_\[Mu]\[Nu]:\>\"", "]"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"stressEnergyID", "=", 
+     RowBox[{"TCalc", "[", 
+      RowBox[{
+       RowBox[{"\"\<StressEnergy\>\"", "[", "\"\<\[Mu]\[Nu]\>\"", "]"}], ",", 
+       
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"1", "/", 
+          RowBox[{"(", 
+           RowBox[{"8", "*", "Pi"}], ")"}]}], ")"}], "*", 
+        RowBox[{"einsteinID", "[", "\"\<\[Mu]\[Nu]\>\"", "]"}]}]}], "]"}]}], 
+    ";"}], "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{"Display", " ", "stress"}], "-", 
+     RowBox[{"energy", " ", "components"}]}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"TList", "[", "stressEnergyID", "]"}], ";"}], 
+   "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{"Analyze", " ", "energy", " ", "conditions"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Print", "[", "\"\<Energy Density (T_00 component):\>\"", "]"}], 
+    ";"}], "\n", 
+   RowBox[{
+    RowBox[{"energyDensity", "=", 
+     RowBox[{
+      RowBox[{"TGetComponents", "[", "stressEnergyID", "]"}], "[", 
+      RowBox[{"[", 
+       RowBox[{"1", ",", "1"}], "]"}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"Print", "[", "energyDensity", "]"}], ";"}], 
+   "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{
+    "Check", " ", "if", " ", "energy", " ", "density", " ", "is", " ", 
+     "negative", " ", 
+     RowBox[{"(", 
+      RowBox[{"exotic", " ", "matter", " ", "requirement"}], ")"}]}], "*)"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"energyDensitySimplified", "=", 
+     RowBox[{"Simplify", "[", "energyDensity", "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"Print", "[", 
+     RowBox[{"\"\<Simplified energy density: \>\"", ",", 
+      "energyDensitySimplified"}], "]"}], ";"}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+    "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+      "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+      "===", 
+     RowBox[{"GEODESIC", " ", "ANALYSIS"}], "===", "===", "===", "===", "===",
+      "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+      "===", "===", "===", "===", "===", "===", "==="}], "*)"}], "\n", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Print", "[", "\"\<Computing Geodesic Equations...\>\"", "]"}], 
+    ";"}], "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{"Set", " ", "curve", " ", "parameter"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"TSetCurveParameter", "[", "\[Lambda]", "]"}], ";"}], 
+   "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{
+    "Compute", " ", "geodesic", " ", "equations", " ", "from", " ", 
+     "Christoffel", " ", "symbols"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"geodesicID", "=", 
+     RowBox[{"TCalcGeodesicFromChristoffel", "[", 
+      RowBox[{"alcubierre", "[", "\"\<Metric\>\"", "]"}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"Print", "[", 
+     RowBox[{"\"\<Geodesic equations computed. ID: \>\"", ",", "geodesicID"}],
+      "]"}], ";"}], "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{"Display", " ", "geodesic", " ", "equations"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+    "Print", "[", "\"\<Geodesic Equations (set equal to zero):\>\"", "]"}], 
+    ";"}], "\n", 
+   RowBox[{
+    RowBox[{"TShow", "[", "geodesicID", "]"}], ";"}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+    "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+      "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+      "===", 
+     RowBox[{"COORDINATE", " ", "ANALYSIS"}], "===", "===", "===", "===", "===",
+      "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+      "===", "===", "===", "===", "===", "===", "==="}], "*)"}], "\n", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Print", "[", "\"\<Analyzing Coordinate Properties...\>\"", "]"}],
+     ";"}], "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{"Check", " ", "metric", " ", "determinant"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"metricDet", "=", 
+     RowBox[{"Det", "[", 
+      RowBox[{"TGetComponents", "[", 
+       RowBox[{"alcubierre", "[", "\"\<Metric\>\"", "]"}], "]"}], "]"}]}], 
+    ";"}], "\n", 
+   RowBox[{
+    RowBox[{"Print", "[", 
+     RowBox[{"\"\<Metric determinant: \>\"", ",", 
+      RowBox[{"Simplify", "[", "metricDet", "]"}]}], "]"}], ";"}], 
+   "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{"Volume", " ", "element"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"volumeElement", "=", 
+     RowBox[{"Sqrt", "[", 
+      RowBox[{"-", "metricDet"}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"Print", "[", 
+     RowBox[{"\"\<Volume element: \>\"", ",", 
+      RowBox[{"Simplify", "[", "volumeElement", "]"}]}], "]"}], ";"}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+    "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+      "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+      "===", 
+     RowBox[{"COMPARISON", " ", "ANALYSIS"}], "===", "===", "===", "===", "===",
+      "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+      "===", "===", "===", "===", "===", "===", "==="}], "*)"}], "\n", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+    "Print", "[", "\"\<Comparing Minkowski and Alcubierre Spacetimes...\>\"", 
+     "]"}], ";"}], "\n", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+    "Print", "[", "\"\<Minkowski Ricci Scalar (should be 0):\>\"", "]"}], 
+    ";"}], "\n", 
+   RowBox[{
+    RowBox[{"minkowskiRicciID", "=", 
+     RowBox[{"TCalcRicciScalar", "[", 
+      RowBox[{"minkowski", "[", "\"\<Metric\>\"", "]"}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"TShow", "[", "minkowskiRicciID", "]"}], ";"}], "\n", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+    "Print", "[", "\"\<Minkowski Einstein Tensor (should be 0):\>\"", "]"}], 
+    ";"}], "\n", 
+   RowBox[{
+    RowBox[{"minkowskiEinsteinID", "=", 
+     RowBox[{"TCalcEinsteinTensor", "[", 
+      RowBox[{"minkowski", "[", "\"\<Metric\>\"", "]"}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"TShow", "[", "minkowskiEinsteinID", "]"}], ";"}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+    "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+      "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+      "===", 
+     RowBox[{"SUMMARY", " ", "AND", " ", "UTILITIES"}], "===", "===", "===", "===",
+      "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+      "===", "===", "===", "===", "===", "===", "===", "==="}], "*)"}], "\n", 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Print", "[", "\"\<Analysis Summary:\>\"", "]"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"Print", "[", "\"\<================\>\"", "]"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"Print", "[", "\"\<Spacetimes created:\>\"", "]"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"Print", "[", 
+     RowBox[{"\"\<  - Minkowski: \>\"", ",", 
+      RowBox[{"minkowski", "[", "\"\<Metric\>\"", "]"}]}], "]"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"Print", "[", 
+     RowBox[{"\"\<  - Alcubierre: \>\"", ",", 
+      RowBox[{"alcubierre", "[", "\"\<Metric\>\"", "]"}]}], "]"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"Print", "[", "\"\<\>\"", "]"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"Print", "[", "\"\<Computed tensors for Alcubierre:\>\"", "]"}], 
+    ";"}], "\n", 
+   RowBox[{
+    RowBox[{"Print", "[", 
+     RowBox[{"\"\<  - Christoffel: \>\"", ",", "christoffelID"}], "]"}], 
+    ";"}], "\n", 
+   RowBox[{
+    RowBox[{"Print", "[", 
+     RowBox[{"\"\<  - Riemann: \>\"", ",", "riemannID"}], "]"}], ";"}], "\n", 
+   
+   RowBox[{
+    RowBox[{"Print", "[", 
+     RowBox[{"\"\<  - Ricci Tensor: \>\"", ",", "ricciTensorID"}], "]"}], 
+    ";"}], "\n", 
+   RowBox[{
+    RowBox[{"Print", "[", 
+     RowBox[{"\"\<  - Ricci Scalar: \>\"", ",", "ricciScalarID"}], "]"}], 
+    ";"}], "\n", 
+   RowBox[{
+    RowBox[{"Print", "[", 
+     RowBox[{"\"\<  - Einstein: \>\"", ",", "einsteinID"}], "]"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"Print", "[", 
+     RowBox[{"\"\<  - Stress-Energy: \>\"", ",", "stressEnergyID"}], "]"}], 
+    ";"}], "\n", 
+   RowBox[{
+    RowBox[{"Print", "[", 
+     RowBox[{"\"\<  - Geodesics: \>\"", ",", "geodesicID"}], "]"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"Print", "[", "\"\<\>\"", "]"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+    "Print", "[", "\"\<Use TShow[tensorID] to display components\>\"", "]"}], 
+    ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+    "Print", "[", "\"\<Use TList[tensorID] to list non-zero components\>\"", 
+     "]"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+    "Print", "[", "\"\<Use TInfo[tensorID] for tensor information\>\"", "]"}],
+     ";"}], "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{
+    "Utility", " ", "function", " ", "to", " ", "show", " ", "all", " ", 
+     "tensor", " ", "info"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"ShowSpacetimeInfo", "[", "spacetimeName_String", "]"}], ":=", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", "}"}], ",", 
+      RowBox[{
+       RowBox[{"Print", "[", 
+        RowBox[{"\"\<=== \>\"", ",", "spacetimeName", 
+         ",", "\"\< Spacetime Information ===\>\""}], "]"}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{"spacetimeName", "==", "\"\<Minkowski\>\""}], ",", 
+         RowBox[{
+          RowBox[{"TInfo", "[", 
+           RowBox[{"minkowski", "[", "\"\<Metric\>\"", "]"}], "]"}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{"TInfo", "[", "minkowskiRicciID", "]"}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{"TInfo", "[", "minkowskiEinsteinID", "]"}]}], ",", 
+         RowBox[{
+          RowBox[{"TInfo", "[", 
+           RowBox[{"alcubierre", "[", "\"\<Metric\>\"", "]"}], "]"}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{"TInfo", "[", "christoffelID", "]"}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{"TInfo", "[", "riemannID", "]"}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{"TInfo", "[", "ricciTensorID", "]"}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{"TInfo", "[", "ricciScalarID", "]"}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{"TInfo", "[", "einsteinID", "]"}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{"TInfo", "[", "stressEnergyID", "]"}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{"TInfo", "[", "geodesicID", "]"}], ";"}]}], "]"}], ";"}]}], 
+     "]"}]}], "\n", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Print", "[", "\"\<\>\"", "]"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+    "Print", "[", "\"\<To see complete information for a spacetime, use:\>\"",
+      "]"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+    "Print", "[", "\"\<ShowSpacetimeInfo[\\\"Minkowski\\\"] or \
+ShowSpacetimeInfo[\\\"Alcubierre\\\"]\>\"", "]"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"Print", "[", "\"\<\>\"", "]"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+    "Print", "[", "\"\<Setup complete! Ready for analysis.\>\"", "]"}], ";"}],
+    "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+    "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+      "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+      "===", 
+     RowBox[{"EXAMPLE", " ", "ADDITIONAL", " ", "ANALYSES"}], "===", "===", "===",
+      "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+      "===", "===", "===", "===", "===", "===", "===", "===", "==="}], "*)"}],
+    "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{"(*", 
+     RowBox[{"Example", ":", 
+      RowBox[{"Export", " ", "tensor", " ", "data"}]}], "*)"}], 
+    RowBox[{
+     RowBox[{"exportData", "=", 
+      RowBox[{"TExportAll", "[", "\"\<alcubierre_tensors.mx\>\"", "]"}]}], ";",
+      "\[IndentingNewLine]", 
+     RowBox[{"(*", 
+      RowBox[{"Example", ":", 
+       RowBox[{
+       "Simplify", " ", "expressions", " ", "with", " ", "assumptions"}]}], 
+      "*)"}], 
+     RowBox[{"TSetAssumptions", "[", 
+      RowBox[{
+       RowBox[{"t", ">", "0"}], ",", 
+       RowBox[{"x", "\[Element]", "Reals"}], ",", 
+       RowBox[{"y", "\[Element]", "Reals"}], ",", 
+       RowBox[{"z", "\[Element]", "Reals"}]}], "]"}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"(*", 
+      RowBox[{"Example", ":", 
+       RowBox[{"Calculate", " ", "specific", " ", "geodesic"}]}], "*)"}], 
+     RowBox[{"testGeodesic", "=", 
+      RowBox[{"TCalcGeodesicWithTimeParameter", "[", 
+       RowBox[{"alcubierre", "[", "\"\<Metric\>\"", "]"}], "]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"(*", 
+      RowBox[{"Example", ":", 
+       RowBox[{"Transform", " ", "coordinates"}]}], "*)"}], 
+     RowBox[{"sphericalCoords", "=", 
+      RowBox[{"TNewCoordinates", "[", 
+       RowBox[{"\"\<Spherical\>\"", ",", 
+        RowBox[{"{", 
+         RowBox[{"t", ",", "r", ",", "\[Theta]", ",", "\[CurlyPhi]"}], 
+         "}"}]}], "]"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"TAddCoordTransformation", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"alcubierre", "[", "\"\<Coordinates\>\"", "]"}], 
+        "->", "\"\<Spherical\>\""}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"x", "->", 
+          RowBox[{"r", "*", 
+           RowBox[{"Sin", "[", "\[Theta]", "]"}], "*", 
+           RowBox[{"Cos", "[", "\[CurlyPhi]", "]"}]}]}], ",", 
+         RowBox[{"y", "->", 
+          RowBox[{"r", "*", 
+           RowBox[{"Sin", "[", "\[Theta]", "]"}], "*", 
+           RowBox[{"Sin", "[", "\[CurlyPhi]", "]"}]}]}], ",", 
+         RowBox[{"z", "->", 
+          RowBox[{"r", "*", 
+           RowBox[{"Cos", "[", "\[Theta]", "]"}]}]}]}], "}"}]}], "]"}], ";"}],
+     "*)"}]}]}]], "Input",
+ CellChangeTimes->{{3.964886462359931*^9, 3.964886478331942*^9}},
+ CellLabel->"In[10]:=",ExpressionUUID->"e6f3ca21-a928-4f26-8633-8464a61915b0"]
+},
+WindowSize->{1440, 792},
+WindowMargins->{{-1440, 1057.5}, {Automatic, 0}},
+FrontEndVersion->"14.2 for Linux x86 (64-bit) (March 16, 2025)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"2c280c4c-1a3b-4c6e-b8ed-5e680009a193"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[554, 20, 37816, 920, 5681, "Input",ExpressionUUID->"e6f3ca21-a928-4f26-8633-8464a61915b0"]
+}
+]
+*)
+

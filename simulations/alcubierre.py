@@ -246,6 +246,19 @@ class AlcubierreSimulation:
                 # Get warp function value
                 warp_value = self.alcubierre_spacetime.metric._warp_function(r_s)
 
+                def max_fun(warp_value, max_warp):
+                    return jnp.abs(warp_value), jnp.sign(warp_value)
+
+                def default_fun(warp_value, max_warp):
+                    return max_warp, jnp.sign(max_warp)
+
+                max_warp, warp_sign = jax.lax.cond(
+                    jnp.abs(warp_value) > jnp.abs(max_warp),
+                    max_fun,
+                    default_fun,
+                    (warp_value, max_warp),
+                )
+
                 if jnp.abs(warp_value) > jnp.abs(max_warp):
                     max_warp = jnp.abs(warp_value)
                     warp_sign = jnp.sign(warp_value)
@@ -427,8 +440,8 @@ def run_basic_simulation():
         warp_radius=10.0,
         warp_thickness=0.5,
         starfield_x_position=-100.0,
-        image_width=256,  # Smaller for testing
-        image_height=256,
+        image_width=4,  # Smaller for testing
+        image_height=4,
     )
 
     # Render at t=0 (warp bubble at origin)
@@ -493,7 +506,7 @@ if __name__ == "__main__":
         simulation, alc_img, mink_img, warp_img = run_basic_simulation()
 
         # Time series
-        run_time_series_simulation()
+        # run_time_series_simulation()
 
         print("\n" + "=" * 60)
         print("SIMULATION COMPLETED SUCCESSFULLY")
