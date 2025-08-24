@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       154,          7]
-NotebookDataLength[     62105,       1474]
-NotebookOptionsPosition[     61533,       1457]
-NotebookOutlinePosition[     61954,       1474]
-CellTagsIndexPosition[     61911,       1471]
+NotebookDataLength[     68247,       1589]
+NotebookOptionsPosition[     67665,       1572]
+NotebookOutlinePosition[     68096,       1589]
+CellTagsIndexPosition[     68053,       1586]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -24,9 +24,8 @@ Cell[BoxData[
    RowBox[{
    "WARP", " ", "DRIVE", " ", "SPACETIME", " ", "ANALYSIS", " ", "WITH", " ", 
     "WOLFRAM", " ", "FUNCTION", " ", "ARCHIVE"}], "==="}], "*)"}]], "Input",
- CellChangeTimes->{{3.964910407998023*^9, 
-  3.964910453029188*^9}},ExpressionUUID->"f9621b7f-6184-4bda-81b5-\
-d883d9e89c5f"],
+ CellChangeTimes->{{3.964910407998023*^9, 3.964910453029188*^9}},
+ CellLabel->"In[39]:=",ExpressionUUID->"f9621b7f-6184-4bda-81b5-d883d9e89c5f"],
 
 Cell[BoxData[{
  RowBox[{
@@ -691,8 +690,7 @@ Cell[BoxData[{
    3.964959862147367*^9, 3.964959951395241*^9}, {3.9649601863895683`*^9, 
    3.9649603094591103`*^9}, {3.964960352345915*^9, 3.964960453244594*^9}, {
    3.96499226288008*^9, 3.9649922894447937`*^9}},
- CellLabel->
-  "In[1327]:=",ExpressionUUID->"46cb78d0-645c-41ba-9671-f0357470e829"],
+ CellLabel->"In[40]:=",ExpressionUUID->"46cb78d0-645c-41ba-9671-f0357470e829"],
 
 Cell[BoxData[
  RowBox[{
@@ -716,7 +714,7 @@ Cell[BoxData[
       RowBox[{
        RowBox[{"\"\<MaxAffineParameter\>\"", "->", "100"}], ",", " ", 
        RowBox[{"\"\<StepSize\>\"", "->", "0.01"}], ",", " ", 
-       RowBox[{"\"\<Method\>\"", "->", "\"\<AdaptiveRungeKutta\>\""}]}], 
+       RowBox[{"\"\<Method\>\"", "->", "\"\<ExplicitRungeKutta\>\""}]}], 
       "}"}]}], ";"}], "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{"SpacetimeObject", "/:", 
@@ -733,8 +731,8 @@ Cell[BoxData[
         "metric", ",", " ", "christoffel", ",", " ", "coords", ",", " ", 
          "geodesicSystem", ",", " ", "affineRange", ",", " ", "solution", ",",
           " ", "normalizedDir", ",", " ", "\[Lambda]Max", ",", " ", 
-         "stepSize", ",", " ", "method"}], "}"}], ",", "\[IndentingNewLine]", 
-       
+         "stepSize", ",", " ", "method", ",", " ", "maxSteps"}], "}"}], ",", 
+       "\[IndentingNewLine]", 
        RowBox[{"(*", 
         RowBox[{"Extreact", " ", "spacetime", " ", "objects"}], "*)"}], 
        "\[IndentingNewLine]", 
@@ -777,28 +775,33 @@ Cell[BoxData[
         RowBox[{"geodesicSystem", " ", "=", " ", 
          RowBox[{"BuildGeodesicSystem", "[", 
           RowBox[{
-          "spacetime", ",", " ", "coords", ",", " ", "initialPos", ",", " ", 
-           "normalizedDir"}], "]"}]}], ";", "\[IndentingNewLine]", 
-        "\[IndentingNewLine]", 
+          "spacetime", ",", " ", "initialPos", ",", " ", "normalizedDir"}], 
+          "]"}]}], ";", "\[IndentingNewLine]", "\[IndentingNewLine]", 
         RowBox[{"(*", 
          RowBox[{"Integrate", " ", "using", " ", "NDSolve"}], "*)"}], 
         "\[IndentingNewLine]", 
+        RowBox[{"maxSteps", " ", "=", " ", 
+         RowBox[{"Ceiling", "[", 
+          RowBox[{"\[Lambda]Max", "/", "stepSize"}], "]"}]}], ";", 
+        "\[IndentingNewLine]", 
         RowBox[{"solution", " ", "=", " ", 
-         RowBox[{"NDSolve", "[", 
-          RowBox[{"geodesicSystem", ",", " ", 
-           RowBox[{"Flatten", "[", 
-            RowBox[{"{", 
-             RowBox[{"coords", ",", " ", 
-              RowBox[{"Through", "[", 
-               RowBox[{
-                SuperscriptBox["coords", "\[Prime]"], "[", "\[Lambda]", "]"}],
-                "]"}]}], "}"}], "]"}], ",", " ", 
+         RowBox[{"NDSolve", "[", "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"geodesicSystem", "[", "\"\<Equations\>\"", "]"}], ",", 
+             " ", 
+             RowBox[{
+             "geodesicSystem", "[", "\"\<InitialConditions\>\"", "]"}]}], 
+            "}"}], ",", "\[IndentingNewLine]", " ", 
+           RowBox[{
+           "geodesicSystem", "[", "\"\<CoordinateFunctions\>\"", "]"}], ",", 
+           " ", 
            RowBox[{"{", 
             RowBox[{"\[Lambda]", ",", "0", ",", "\[Lambda]Max"}], "}"}], ",", 
            " ", 
            RowBox[{"Method", "->", "method"}], ",", " ", 
-           RowBox[{"MaxSteps", "->", 
-            RowBox[{"\[Lambda]Max", "/", "stepSize"}]}], ",", " ", 
+           RowBox[{"MaxSteps", "->", "maxSteps"}], ",", " ", 
            RowBox[{"PrecisionGoal", "->", "$GeodesicNumericalPrecision"}], ",",
             " ", 
            RowBox[{"AccuracyGoal", "->", "$GeodesicNumericalAccuracy"}]}], 
@@ -806,10 +809,11 @@ Cell[BoxData[
         "\[IndentingNewLine]", 
         RowBox[{"GeodesicSolution", "[", 
          RowBox[{
-          RowBox[{"solution", "[", 
-           RowBox[{"[", "1", "]"}], "]"}], ",", " ", "coords", ",", " ", 
+          RowBox[{"solution", "//", "First"}], ",", " ", 
+          RowBox[{"geodesicSystem", "[", "\"\<CoordinateFunctions\>\"", "]"}],
+           ",", " ", 
           RowBox[{"{", 
-           RowBox[{"0", ",", "\[Lambda]Max"}], "}"}]}], "]"}], ";"}]}], 
+           RowBox[{"0", ",", "\[Lambda]Max"}], "}"}]}], "]"}]}]}], 
       "\[IndentingNewLine]", "]"}]}], ";"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{"NormalizeNullDirection", "[", 
@@ -968,8 +972,8 @@ Cell[BoxData[
       RowBox[{"{", 
        RowBox[{
        "metric", ",", "coords", ",", " ", "coordFunctions", ",", " ", 
-        "christoffel", ",", " ", "geodesicEqs", ",", " ", "initialConditions",
-         ",", "\[Lambda]"}], "}"}], ",", "\[IndentingNewLine]", 
+        "christoffel", ",", " ", "geodesicEqs", ",", " ", 
+        "initialConditions"}], "}"}], ",", "\[IndentingNewLine]", 
       RowBox[{
        RowBox[{"coords", " ", "=", " ", 
         RowBox[{"spacetime", "[", "\"\<Coordinates\>\"", "]"}]}], ";", 
@@ -1041,18 +1045,77 @@ Cell[BoxData[
         RowBox[{"Join", "[", "\[IndentingNewLine]", 
          RowBox[{
           RowBox[{"Thread", "[", 
-           RowBox[{"coords", "==", "initialPos"}], "]"}], ",", 
-          "\[IndentingNewLine]", 
+           RowBox[{
+            RowBox[{"(", 
+             RowBox[{"coordFunctions", "/.", 
+              RowBox[{"\[Lambda]", "->", "0"}]}], ")"}], "==", "initialPos"}],
+            "]"}], ",", "\[IndentingNewLine]", 
           RowBox[{"Thread", "[", 
            RowBox[{
-            RowBox[{"D", "[", 
-             RowBox[{"coordFunctions", ",", "\[Lambda]"}], "]"}], "==", 
-            "initialDir"}], "]"}]}], "\[IndentingNewLine]", "]"}]}], ";", 
-       "\[IndentingNewLine]", "\[IndentingNewLine]", 
-       RowBox[{"Join", "[", 
-        RowBox[{"geodesicEqs", ",", " ", "initialConditions"}], "]"}]}]}], 
-     "\[IndentingNewLine]", "]"}]}], "\[IndentingNewLine]", 
-   "\[IndentingNewLine]", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"D", "[", 
+               RowBox[{"coordFunctions", ",", "\[Lambda]"}], "]"}], "/.", 
+              RowBox[{"\[Lambda]", "->", "0"}]}], ")"}], "==", "initialDir"}],
+            "]"}]}], "\[IndentingNewLine]", "]"}]}], ";", 
+       "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+       RowBox[{"GeodesicSystem", "[", 
+        RowBox[{
+        "geodesicEqs", ",", " ", "initialConditions", ",", " ", 
+         "coordFunctions"}], "]"}]}]}], "\[IndentingNewLine]", "]"}]}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+    "Object", " ", "to", " ", "hold", " ", "Geodesic", " ", "system", " ", 
+     "of", " ", "equations"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"GeodesicSystem", "[", 
+     RowBox[{"eqs_", ",", " ", "initconds_", ",", " ", "coordFuncs_"}], "]"}],
+     ":=", 
+    RowBox[{"GeodesicSystemObject", "[", 
+     RowBox[{"eqs", ",", " ", "initconds", ",", " ", "coordFuncs"}], "]"}]}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"GeodesicSystemObject", "[", 
+      RowBox[{"eqs_", ",", " ", "_", ",", " ", "_"}], "]"}], 
+     "[", "\"\<Equations\>\"", "]"}], ":=", "eqs"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"GeodesicSystemObject", "[", 
+      RowBox[{"_", ",", "initconds_", ",", "_"}], "]"}], 
+     "[", "\"\<InitialConditions\>\"", "]"}], ":=", "initconds"}], " ", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"GeodesicSystemObject", "[", 
+      RowBox[{"_", ",", "_", ",", "coordFuncs_"}], "]"}], 
+     "[", "\"\<CoordinateFunctions\>\"", "]"}], ":=", "coordFuncs"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"GeodesicSystem", "::", "method"}], 
+     "=", "\"\<Unknown method `1`. Available: Position, Velocity, \
+ParameterRange, Plot, PlotPath\>\""}], ";"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"GeodesicSystemObject", "/:", 
+    RowBox[{"Format", "[", 
+     RowBox[{"GeodesicSystemObject", "[", 
+      RowBox[{"_", ",", "_", ",", "coordFuncs_"}], "]"}], "]"}], ":=", 
+    RowBox[{"DisplayForm", "@", 
+     RowBox[{"Panel", "[", 
+      RowBox[{
+       RowBox[{"RowBox", "[", 
+        RowBox[{"{", 
+         RowBox[{"\"\<GeodesicSystem\>\"", ",", "\"\<(\>\"", ",", 
+          RowBox[{"Sequence", "@@", 
+           RowBox[{"Riffle", "[", 
+            RowBox[{"coordFuncs", ",", " ", "\"\<,\>\""}], "]"}]}], 
+          ",", "\"\<)\>\""}], "}"}], "]"}], ",", 
+       RowBox[{"Background", "->", 
+        RowBox[{"RGBColor", "[", 
+         RowBox[{"0.95", ",", "1", ",", "0.95", ",", ".3"}], "]"}]}], ",", 
+       RowBox[{"FrameMargins", "->", "3"}]}], "]"}]}]}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
    RowBox[{"(*", 
     RowBox[{"Geodesic", " ", "Solution", " ", "Object"}], "*)"}], "\[IndentingNewLine]", 
    RowBox[{"(*", 
@@ -1061,48 +1124,48 @@ Cell[BoxData[
     "*)"}], 
    RowBox[{
     RowBox[{"GeodesicSolution", "[", 
-     RowBox[{"solution_List", ",", "coords_List", ",", "paramRange_List"}], 
-     "]"}], ":=", 
+     RowBox[{
+     "solution_List", ",", "coordFuncs_List", ",", "paramRange_List"}], "]"}],
+     ":=", 
     RowBox[{"GeodesicSolutionObject", "[", 
-     RowBox[{"solution", ",", "coords", ",", "paramRange"}], "]"}]}], 
-   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+     RowBox[{"solution", ",", "coordFuncs", ",", "paramRange"}], "]"}]}], 
+   "\n", "\[IndentingNewLine]", 
    RowBox[{"(*", 
-    RowBox[{"Methods", " ", "for", " ", "GeodesicSolution"}], "*)"}], "\n", 
+    RowBox[{"Methods", " ", "for", " ", "GeodesicSolution"}], "*)"}], "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{
      RowBox[{
       RowBox[{"GeodesicSolutionObject", "[", 
-       RowBox[{"sol_", ",", "coords_", ",", "range_"}], "]"}], "[", 
+       RowBox[{"sol_", ",", "coordFuncs_", ",", "range_"}], "]"}], "[", 
       "method_String", "]"}], ":=", 
      RowBox[{"Switch", "[", 
       RowBox[{"method", ",", "\[IndentingNewLine]", "\"\<Position\>\"", ",", 
        RowBox[{"Function", "[", 
-        RowBox[{"\[Lambda]", ",", 
+        RowBox[{"\[Lambda]v", ",", 
          RowBox[{"Evaluate", "[", 
           RowBox[{
-           RowBox[{"coords", "/.", " ", "sol"}], "/.", " ", 
-           RowBox[{"\[Lambda]", "->", "#"}]}], "]"}]}], "]"}], ",", 
+           RowBox[{"coordFuncs", "/.", " ", "sol"}], "/.", " ", 
+           RowBox[{"\[Lambda]", "->", "\[Lambda]v"}]}], "]"}]}], "]"}], ",", 
        "\[IndentingNewLine]", "\"\<Velocity\>\"", ",", 
        RowBox[{"Function", "[", 
-        RowBox[{"\[Lambda]", ",", 
+        RowBox[{"\[Lambda]v", ",", 
          RowBox[{"Evaluate", "[", 
           RowBox[{
-           RowBox[{
-            RowBox[{"Through", "[", 
-             RowBox[{
-              RowBox[{"coords", "'"}], "[", "\[Lambda]", "]"}], "]"}], "/.", 
-            " ", "sol"}], "/.", " ", 
-           RowBox[{"\[Lambda]", "->", "#"}]}], "]"}]}], "]"}], ",", 
+           RowBox[{"D", "[", 
+            RowBox[{
+             RowBox[{"coordFuncs", "/.", " ", "sol"}], ",", "\[Lambda]"}], 
+            "]"}], "/.", " ", 
+           RowBox[{"\[Lambda]", "->", "\[Lambda]v"}]}], "]"}]}], "]"}], ",", 
        "\[IndentingNewLine]", "\"\<ParameterRange\>\"", ",", "range", ",", 
        "\[IndentingNewLine]", "\"\<Plot\>\"", ",", 
        RowBox[{"GeodesicPlot", "[", 
         RowBox[{"GeodesicSolutionObject", "[", 
-         RowBox[{"sol", ",", "coords", ",", "range"}], "]"}], "]"}], ",", 
+         RowBox[{"sol", ",", "coordFuncs", ",", "range"}], "]"}], "]"}], ",", 
        "\[IndentingNewLine]", "\"\<PlotPath\>\"", ",", 
        RowBox[{"GeodesicPathPlot", "[", 
         RowBox[{"GeodesicSolutionObject", "[", 
-         RowBox[{"sol", ",", "coords", ",", "range"}], "]"}], "]"}], ",", 
-       "\[IndentingNewLine]", "\"\<Coordinates\>\"", ",", "coords", ",", 
+         RowBox[{"sol", ",", "coordFuncs", ",", "range"}], "]"}], "]"}], ",", 
+       "\[IndentingNewLine]", "\"\<Coordinates\>\"", ",", "coordFuncs", ",", 
        "\[IndentingNewLine]", "\"\<Solution\>\"", ",", "sol", ",", 
        "\[IndentingNewLine]", "_", ",", 
        RowBox[{"(", 
@@ -1111,7 +1174,7 @@ Cell[BoxData[
           RowBox[{
            RowBox[{"GeodesicSolution", "::", "method"}], ",", "method"}], 
           "]"}], ";", "$Failed"}], ")"}]}], "\[IndentingNewLine]", "]"}]}], 
-    ";"}], "\[IndentingNewLine]", "\n", 
+    ";"}], "\n", "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{
      RowBox[{"GeodesicSolution", "::", "method"}], 
@@ -1160,37 +1223,37 @@ ParameterRange, Plot, PlotPath\>\""}], ";"}], "\[IndentingNewLine]",
        RowBox[{"(*", 
         RowBox[{
         "Plot", " ", "each", " ", "coordinate", " ", "vs", " ", "affine", " ",
-          "parameter"}], "*)"}], 
+          "parameter"}], "*)"}], "\[IndentingNewLine]", 
        RowBox[{"plots", "=", 
-        RowBox[{"Table", "[", 
+        RowBox[{"Table", "[", "\[IndentingNewLine]", 
          RowBox[{
-          RowBox[{"Plot", "[", 
+          RowBox[{"Plot", "[", "\[IndentingNewLine]", 
            RowBox[{
             RowBox[{
              RowBox[{"posFunc", "[", "\[Lambda]", "]"}], "[", 
-             RowBox[{"[", "i", "]"}], "]"}], ",", 
+             RowBox[{"[", "i", "]"}], "]"}], ",", "\[IndentingNewLine]", 
             RowBox[{"{", 
              RowBox[{"\[Lambda]", ",", 
               RowBox[{"range", "[", 
                RowBox[{"[", "1", "]"}], "]"}], ",", 
               RowBox[{"range", "[", 
                RowBox[{"[", "2", "]"}], "]"}]}], "}"}], ",", 
+            "\[IndentingNewLine]", 
             RowBox[{"PlotLabel", "->", 
-             RowBox[{
-              RowBox[{"ToString", "[", 
-               RowBox[{"coords", "[", 
-                RowBox[{"[", "i", "]"}], "]"}], "]"}], 
-              "<>", "\"\<[\[Lambda]]\>\""}]}], ",", 
+             RowBox[{"ToString", "[", 
+              RowBox[{"coords", "[", 
+               RowBox[{"[", "i", "]"}], "]"}], "]"}]}], ",", 
             RowBox[{"Frame", "->", "True"}]}], "]"}], ",", 
+          "\[IndentingNewLine]", 
           RowBox[{"{", 
-           RowBox[{"i", ",", "1", ",", "4"}], "}"}]}], "]"}]}], ";", 
-       "\[IndentingNewLine]", 
+           RowBox[{"i", ",", "1", ",", "4"}], "}"}]}], "\[IndentingNewLine]", 
+         "]"}]}], ";", "\[IndentingNewLine]", 
        RowBox[{"GraphicsGrid", "[", 
         RowBox[{
          RowBox[{"Partition", "[", 
           RowBox[{"plots", ",", "2"}], "]"}], ",", 
-         RowBox[{"Frame", "->", "All"}]}], "]"}]}]}], "]"}]}], 
-   "\[IndentingNewLine]", "\n", 
+         RowBox[{"Frame", "->", "All"}]}], "]"}]}]}], "\[IndentingNewLine]", 
+     "]"}]}], "\[IndentingNewLine]", "\n", 
    RowBox[{
     RowBox[{"GeodesicPathPlot", "[", "geodSol_GeodesicSolutionObject", "]"}], 
     ":=", 
@@ -1239,14 +1302,14 @@ ParameterRange, Plot, PlotPath\>\""}], ";"}], "\[IndentingNewLine]",
        RowBox[{"(*", 
         RowBox[{
         "3", "D", " ", "plot", " ", "of", " ", "spatial", " ", "path"}], 
-        "*)"}], 
-       RowBox[{"ListPointPlot3D", "[", 
-        RowBox[{"spatialPath", ",", 
+        "*)"}], "\[IndentingNewLine]", 
+       RowBox[{"ListPointPlot3D", "[", "\[IndentingNewLine]", 
+        RowBox[{"spatialPath", ",", "\[IndentingNewLine]", 
          RowBox[{"PlotStyle", "->", 
           RowBox[{"{", 
            RowBox[{"Red", ",", 
             RowBox[{"PointSize", "[", "0.01", "]"}]}], "}"}]}], ",", 
-         RowBox[{"Joined", "->", "True"}], ",", 
+         "\[IndentingNewLine]", 
          RowBox[{"AxesLabel", "->", 
           RowBox[{"{", 
            RowBox[{
@@ -1256,10 +1319,13 @@ ParameterRange, Plot, PlotPath\>\""}], ";"}], "\[IndentingNewLine]",
              RowBox[{"[", "3", "]"}], "]"}], ",", 
             RowBox[{"coords", "[", 
              RowBox[{"[", "4", "]"}], "]"}]}], "}"}]}], ",", 
+         "\[IndentingNewLine]", 
          RowBox[{"PlotLabel", "->", "\"\<Null Geodesic Path\>\""}], ",", 
+         "\[IndentingNewLine]", 
          RowBox[{"BoxRatios", "->", 
           RowBox[{"{", 
-           RowBox[{"1", ",", "1", ",", "1"}], "}"}]}]}], "]"}]}]}], "]"}]}], 
+           RowBox[{"1", ",", "1", ",", "1"}], "}"}]}]}], 
+        "\[IndentingNewLine]", "]"}]}]}], "\[IndentingNewLine]", "]"}]}], 
    "\[IndentingNewLine]", "\[IndentingNewLine]", 
    RowBox[{"(*", " ", 
     RowBox[{
@@ -1270,11 +1336,11 @@ ParameterRange, Plot, PlotPath\>\""}], ";"}], "\[IndentingNewLine]",
       RowBox[{"CONVENIENCE", " ", "FUNCTIONS"}]}], "===", "===", "===", "===",
       "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
       "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", 
-     "=="}], "*)"}], "\n", "\[IndentingNewLine]", 
+     "=="}], "*)"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
    RowBox[{"(*", 
     RowBox[{
     "Quick", " ", "light", " ", "ray", " ", "tracer", " ", "from", " ", 
-     "camera", " ", "to", " ", "scene"}], "*)"}], "\[IndentingNewLine]", 
+     "camera", " ", "to", " ", "scene"}], "*)"}], "\n", 
    RowBox[{
     RowBox[{"TraceLightRay", "[", 
      RowBox[{
@@ -1332,18 +1398,26 @@ ParameterRange, Plot, PlotPath\>\""}], ";"}], "\[IndentingNewLine]",
    RowBox[{"(*", 
     RowBox[{
     "Test", " ", "null", " ", "condition", " ", "along", " ", "geodesic"}], 
-    "*)"}], "\n", 
+    "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"Options", "[", "VerifyNullCondition", "]"}], " ", "=", " ", 
+     RowBox[{"{", 
+      RowBox[{"MakePlot", "->", "False"}], "}"}]}], ";"}], "\n", 
    RowBox[{
     RowBox[{"VerifyNullCondition", "[", 
      RowBox[{
-     "spacetime_SpacetimeObject", ",", "geodSol_GeodesicSolutionObject"}], 
-     "]"}], ":=", 
+     "spacetime_SpacetimeObject", ",", "geodSol_GeodesicSolutionObject", ",", 
+      
+      RowBox[{"opts", ":", 
+       RowBox[{"OptionsPattern", "[", "]"}]}]}], "]"}], ":=", 
     RowBox[{"Module", "[", 
      RowBox[{
       RowBox[{"{", 
        RowBox[{
        "metric", ",", "coords", ",", "posFunc", ",", "velFunc", ",", "range", 
         ",", "samples", ",", "nullValues"}], "}"}], ",", 
+      "\[IndentingNewLine]", 
       RowBox[{
        RowBox[{"metric", "=", 
         RowBox[{"spacetime", "[", "\"\<Matrix\>\"", "]"}]}], ";", 
@@ -1359,7 +1433,7 @@ ParameterRange, Plot, PlotPath\>\""}], ";"}], "\[IndentingNewLine]",
        "\[IndentingNewLine]", 
        RowBox[{"range", "=", 
         RowBox[{"geodSol", "[", "\"\<ParameterRange\>\"", "]"}]}], ";", 
-       "\[IndentingNewLine]", 
+       "\[IndentingNewLine]", "\[IndentingNewLine]", 
        RowBox[{"(*", 
         RowBox[{"Sample", " ", "along", " ", "geodesic"}], "*)"}], 
        "\[IndentingNewLine]", 
@@ -1384,9 +1458,9 @@ ParameterRange, Plot, PlotPath\>\""}], ";"}], "\[IndentingNewLine]",
         RowBox[{"Calculate", " ", "g_\[Mu]\[Nu]", " ", 
          RowBox[{"v", "^", "\[Mu]"}], " ", 
          RowBox[{"v", "^", "\[Nu]"}], " ", "at", " ", "each", " ", "point"}], 
-        "*)"}], 
+        "*)"}], "\[IndentingNewLine]", 
        RowBox[{"nullValues", "=", 
-        RowBox[{"Table", "[", 
+        RowBox[{"Table", "[", "\[IndentingNewLine]", 
          RowBox[{
           RowBox[{"With", "[", 
            RowBox[{
@@ -1396,6 +1470,7 @@ ParameterRange, Plot, PlotPath\>\""}], ";"}], "\[IndentingNewLine]",
                RowBox[{"posFunc", "[", "\[Lambda]", "]"}]}], ",", 
               RowBox[{"vel", "=", 
                RowBox[{"velFunc", "[", "\[Lambda]", "]"}]}]}], "}"}], ",", 
+            "\[IndentingNewLine]", 
             RowBox[{"Sum", "[", 
              RowBox[{
               RowBox[{
@@ -1413,34 +1488,58 @@ ParameterRange, Plot, PlotPath\>\""}], ";"}], "\[IndentingNewLine]",
               RowBox[{"{", 
                RowBox[{"\[Mu]", ",", "1", ",", "4"}], "}"}], ",", 
               RowBox[{"{", 
-               RowBox[{"\[Nu]", ",", "1", ",", "4"}], "}"}]}], "]"}]}], "]"}],
-           ",", 
+               RowBox[{"\[Nu]", ",", "1", ",", "4"}], "}"}]}], "]"}]}], 
+           "\[IndentingNewLine]", "]"}], ",", "\[IndentingNewLine]", 
           RowBox[{"{", 
-           RowBox[{"\[Lambda]", ",", "samples"}], "}"}]}], "]"}]}], ";", 
+           RowBox[{"\[Lambda]", ",", "samples"}], "}"}]}], 
+         "\[IndentingNewLine]", "]"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"Print", "[", "\[IndentingNewLine]", 
+        RowBox[{"If", "[", 
+         RowBox[{
+          RowBox[{"AllTrue", "[", 
+           RowBox[{"nullValues", ",", " ", 
+            RowBox[{
+             RowBox[{"(", 
+              RowBox[{"0", "==", 
+               RowBox[{"Chop", "[", 
+                RowBox[{"#", ",", 
+                 SuperscriptBox["10", 
+                  RowBox[{"-", "15"}]]}], "]"}]}], ")"}], "&"}]}], "]"}], ",",
+           " ", "\"\<True\>\"", ",", " ", "\"\<False\>\""}], "]"}], 
+        "\[IndentingNewLine]", "]"}], ";", "\[IndentingNewLine]", 
        "\[IndentingNewLine]", 
        RowBox[{"(*", 
         RowBox[{"Plot", " ", "null", " ", "condition", " ", "violation"}], 
         "*)"}], "\[IndentingNewLine]", 
-       RowBox[{"ListLinePlot", "[", 
+       RowBox[{"If", "[", 
         RowBox[{
-         RowBox[{"Transpose", "[", 
-          RowBox[{"{", 
-           RowBox[{"samples", ",", "nullValues"}], "}"}], "]"}], ",", 
-         RowBox[{
-         "PlotLabel", 
-          "->", "\"\<Null Condition: g_\[Mu]\[Nu] v^\[Mu] v^\[Nu]\>\""}], ",", 
-         RowBox[{"AxesLabel", "->", 
-          RowBox[{"{", 
-           
-           RowBox[{"\"\<Affine Parameter \[Lambda]\>\"", 
-            ",", "\"\<g_\[Mu]\[Nu] v^\[Mu] v^\[Nu]\>\""}], "}"}]}], ",", 
-         RowBox[{"Frame", "->", "True"}], ",", 
-         RowBox[{"GridLines", "->", 
-          RowBox[{"{", 
+         RowBox[{"OptionValue", "[", "MakePlot", "]"}], ",", 
+         "\[IndentingNewLine]", 
+         RowBox[{"Print", "@", 
+          RowBox[{"ListLinePlot", "[", "\[IndentingNewLine]", 
            RowBox[{
-            RowBox[{"{", "}"}], ",", 
-            RowBox[{"{", "0", "}"}]}], "}"}]}]}], "]"}]}]}], 
-     "\[IndentingNewLine]", "]"}]}], "\n"}]}]], "Input",
+            RowBox[{"Transpose", "[", 
+             RowBox[{"{", 
+              RowBox[{"samples", ",", "nullValues"}], "}"}], "]"}], ",", 
+            "\[IndentingNewLine]", 
+            RowBox[{
+            "PlotLabel", 
+             "->", "\"\<Null Condition: \!\(\*SubscriptBox[\(g\), \
+\(\[Mu]\[Nu]\)]\) \!\(\*SuperscriptBox[\(v\), \(\[Mu]\)]\) \
+\!\(\*SuperscriptBox[\(v\), \(\[Nu]\)]\)\>\""}], ",", "\[IndentingNewLine]", 
+            RowBox[{"AxesLabel", "->", 
+             RowBox[{"{", 
+              
+              RowBox[{"\"\<Affine Parameter \[Lambda]\>\"", 
+               ",", "\"\<\!\(\*SubscriptBox[\(g\), \(\[Mu]\[Nu]\)]\) \
+\!\(\*SuperscriptBox[\(v\), \(\[Mu]\)]\) \!\(\*SuperscriptBox[\(v\), \
+\(\[Nu]\)]\)\>\""}], "}"}]}], ",", "\[IndentingNewLine]", 
+            RowBox[{"FormatType", "->", "StandardForm"}], ",", 
+            "\[IndentingNewLine]", 
+            RowBox[{"GridLines", "->", "Automatic"}]}], "\[IndentingNewLine]",
+            "]"}]}]}], "\[IndentingNewLine]", "]"}], ";"}]}], 
+     "\[IndentingNewLine]", "\[IndentingNewLine]", "]"}]}], "\n"}]}]], "Input",\
+
  CellChangeTimes->{{3.964991851390273*^9, 3.9649922551047907`*^9}, {
    3.964992306286295*^9, 3.964992420223372*^9}, {3.9649924669214067`*^9, 
    3.9649925514965477`*^9}, {3.964992667880662*^9, 3.9649927736729527`*^9}, {
@@ -1451,15 +1550,31 @@ ParameterRange, Plot, PlotPath\>\""}], ";"}], "\[IndentingNewLine]",
    3.9649954407829103`*^9, 3.9649954488587227`*^9}, {3.964995547130406*^9, 
    3.964995549092918*^9}, {3.964996092354179*^9, 3.964996130648525*^9}, {
    3.964996176489423*^9, 3.9649962045644608`*^9}, 3.96499626883171*^9, {
-   3.964996301135638*^9, 3.964996410327836*^9}},
+   3.964996301135638*^9, 3.964996410327836*^9}, {3.964996636829077*^9, 
+   3.9649967725775003`*^9}, {3.964996859836801*^9, 3.964997060507575*^9}, {
+   3.964997105388134*^9, 3.9649971101066713`*^9}, {3.964997145881908*^9, 
+   3.964997234590817*^9}, {3.9649972727790117`*^9, 3.964997289801483*^9}, {
+   3.9649973511295223`*^9, 3.964997396154999*^9}, {3.964997435345546*^9, 
+   3.964997472496997*^9}, {3.964997522636826*^9, 3.9649975857255487`*^9}, 
+   3.965007988471521*^9, {3.965008033744666*^9, 3.9650080588180847`*^9}, {
+   3.9650081714263077`*^9, 3.9650082266891212`*^9}, {3.965008285247072*^9, 
+   3.965008289453277*^9}, {3.965008341977501*^9, 3.965008352665658*^9}, {
+   3.96500838727225*^9, 3.965008410200979*^9}, {3.965008482473688*^9, 
+   3.965008498436925*^9}, {3.965008572686863*^9, 3.965008601878471*^9}, {
+   3.9650086691579847`*^9, 3.9650086831355143`*^9}, {3.96504638485935*^9, 
+   3.965046418206265*^9}, {3.9650465060273046`*^9, 3.96504652717032*^9}, {
+   3.965046564959558*^9, 3.9650468056506033`*^9}, {3.965046836215392*^9, 
+   3.96504683926013*^9}, {3.9650468836386414`*^9, 3.9650469481584578`*^9}, {
+   3.965047011860277*^9, 3.9650470251501007`*^9}, {3.9650470633495693`*^9, 
+   3.965047141945726*^9}},
  CellLabel->
-  "In[1476]:=",ExpressionUUID->"7693e903-a355-46b0-9bc4-e014cd73f9d4"]
+  "In[538]:=",ExpressionUUID->"7693e903-a355-46b0-9bc4-e014cd73f9d4"]
 },
 WindowSize->{1440, 792},
-WindowMargins->{{0, Automatic}, {Automatic, 0}},
+WindowMargins->{{Automatic, 1057.5}, {Automatic, 0}},
 Magnification:>1.25 Inherited,
-FrontEndVersion->"14.2 for Linux x86 (64-bit) (March 16, 2025)",
-StyleDefinitions->"Default.nb",
+FrontEndVersion->"14.3 for Linux x86 (64-bit) (July 8, 2025)",
+StyleDefinitions->"solarized_dark.nb",
 ExpressionUUID->"e1b92dbb-c61e-4221-b519-12d497350759"
 ]
 (* End of Notebook Content *)
@@ -1473,9 +1588,9 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[554, 20, 346, 8, 36, "Input",ExpressionUUID->"f9621b7f-6184-4bda-81b5-d883d9e89c5f"],
-Cell[903, 30, 28379, 664, 5148, "Input",ExpressionUUID->"46cb78d0-645c-41ba-9671-f0357470e829"],
-Cell[29285, 696, 32244, 759, 5711, "Input",ExpressionUUID->"7693e903-a355-46b0-9bc4-e014cd73f9d4"]
+Cell[554, 20, 365, 7, 56, "Input",ExpressionUUID->"f9621b7f-6184-4bda-81b5-d883d9e89c5f"],
+Cell[922, 29, 28374, 663, 5168, "Input",ExpressionUUID->"46cb78d0-645c-41ba-9671-f0357470e829"],
+Cell[29299, 694, 38362, 876, 7529, "Input",ExpressionUUID->"7693e903-a355-46b0-9bc4-e014cd73f9d4"]
 }
 ]
 *)
